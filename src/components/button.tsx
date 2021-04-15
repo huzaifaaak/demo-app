@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native'
+import { components } from '../theme/components'
 
 const Container = styled.TouchableOpacity<{ disabled?: boolean }>`
   height: ${({ theme: { components: { Button } } }) => Button.h}px;
@@ -25,10 +26,11 @@ interface IProps {
   onPress: () => void;
 }
 
-export const Button = (props: IProps) => {
+export function Button(props: IProps) {
   const { title, testID, disabled, onPress } = props;
+  const { Pressable: { activeOpacity } } = components;
   return (
-    <Container testID={testID} disabled={disabled} onPress={onPress} activeOpacity={0.7}>
+    <Container testID={testID} disabled={disabled} onPress={onPress} activeOpacity={activeOpacity}>
       <Title>{title}</Title>
     </Container>
   );

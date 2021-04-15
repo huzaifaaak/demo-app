@@ -1,7 +1,10 @@
 import {colors} from './colors';
 import {Font} from './fonts';
 
-export const theme = {
+export const components = {
+    Pressable: {
+        activeOpacity: 0.7,
+    },
     Container: {
         bg: colors.transparent,
         padding: 20,
