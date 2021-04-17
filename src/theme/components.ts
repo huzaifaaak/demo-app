@@ -10,9 +10,10 @@ export const components = {
         padding: 20,
     },
     Text: {
-        fontSize: 16,
+        fontSize: 14,
         color: colors.white,
         fontFamily: Font.REGULAR,
+        lineHeight: 21,
     },
     Header: {
         color: colors.white,
@@ -31,6 +32,8 @@ export const components = {
         focusable: true,
         px: 20,
         h: 46,
+        borderRadius: 5,
+        errorColor: colors.red,
     },
     Textarea: {
         color: colors.white,
