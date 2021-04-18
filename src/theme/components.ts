@@ -1,5 +1,5 @@
-import {colors} from './colors';
-import {Font} from './fonts';
+import { colors } from './colors';
+import { Font } from './fonts';
 
 export const components = {
     Pressable: {
