@@ -3,7 +3,10 @@ import { Theme } from './theme/';
 import { StatusBar } from 'react-native';
 import { ThemeProvider } from 'styled-components';
 import { NavigationContainer, DarkTheme } from '@react-navigation/native';
+
 import { BaseRoutes } from './routes/app.routes';
+
+import './overrides/Text.rn';
 
 export function Root() {
     return (
@@ -12,5 +15,5 @@ export function Root() {
                 <BaseRoutes />
             </ThemeProvider>
         </NavigationContainer>
-    )
+    );
 }
