@@ -1,4 +1,4 @@
-const {pathGroups, pathGroupsExcludedImportTypes} = getImportOrder();
+const { pathGroups, pathGroupsExcludedImportTypes } = getImportOrder();
 
 module.exports = {
     root: true,
@@ -7,7 +7,7 @@ module.exports = {
         project: 'tsconfig.json',
         sourceType: 'module',
     },
-    plugins: ['@typescript-eslint/eslint-plugin', 'import', 'prettier', 'react', 'react-native'],
+    plugins: ['@typescript-eslint/eslint-plugin', 'react', 'react-native', 'import', 'prettier'],
     extends: [
         '@react-native-community',
         'plugin:@typescript-eslint/eslint-recommended',
@@ -29,7 +29,7 @@ module.exports = {
         '@typescript-eslint/explicit-module-boundary-types': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/no-namespace': 'off',
-        '@typescript-eslint/no-unused-vars': ['warn', {ignoreRestSiblings: true}],
+        '@typescript-eslint/no-unused-vars': ['warn', { ignoreRestSiblings: true }],
         'import/default': 'off',
         'import/order': [
             'error',
@@ -65,8 +65,6 @@ function getImportOrder() {
     const order = [
         ['react', 'external', 'before'],
         ['*react-native*', 'external', 'before'],
-        ['expo*', 'external', 'before'],
-        ['*redux*', 'external', 'before'],
     ];
 
     const tsPaths = Object.keys(tsconfig.compilerOptions.paths || {}).reduce((acc, key) => {
