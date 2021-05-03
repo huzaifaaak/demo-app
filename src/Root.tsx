@@ -1,19 +1,48 @@
 import React from 'react';
-import { Theme } from './theme/';
-import { StatusBar } from 'react-native';
-import { ThemeProvider } from 'styled-components';
+
+import { StatusBar, Text, View } from 'react-native';
+
 import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 
-import { BaseRoutes } from './routes/app.routes';
+import { useTranslation } from 'react-i18next';
 
-import './overrides/Text.rn';
+import { ThemeProvider } from 'styled-components';
+
+import './overrides/Text.override';
+
+import { BottomSheetProvider } from '@components/BottomSheet';
+
+import { FetchProvider } from './fetch';
+import { BaseRoutes } from './routes/app.routes';
+import { Theme } from './theme';
 
 export function Root() {
+    const { ready } = useTranslation();
+
+    if (!ready) {
+        return (
+            <View
+                style={{
+                    flex: 1,
+                    backgroundColor: 'black',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}>
+                <Text>Loading..</Text>
+            </View>
+        );
+    }
+
     return (
-        <NavigationContainer theme={DarkTheme}>
-            <ThemeProvider theme={Theme}>
-                <BaseRoutes />
-            </ThemeProvider>
-        </NavigationContainer>
+        <FetchProvider baseUrl="https://api-staging.bridg.dev">
+            <NavigationContainer theme={DarkTheme}>
+                <StatusBar backgroundColor={DarkTheme.colors.background} />
+                <ThemeProvider theme={Theme}>
+                    <BottomSheetProvider>
+                        <BaseRoutes />
+                    </BottomSheetProvider>
+                </ThemeProvider>
+            </NavigationContainer>
+        </FetchProvider>
     );
 }

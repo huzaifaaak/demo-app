@@ -1,4 +1,5 @@
 import React from 'react';
+
 import styled, { css, useTheme } from 'styled-components/native';
 
 import { ButtonProps } from './Button.decl';
@@ -28,7 +29,7 @@ const Title = styled.Text`
     line-height: 19px;
 `;
 
-export function Button({ title, disabled, onPress, testID }: ButtonProps) {
+export function Button({ disabled, onPress, testID, children }: ButtonProps) {
     const {
         components: {
             Pressable: { activeOpacity },
@@ -41,7 +42,7 @@ export function Button({ title, disabled, onPress, testID }: ButtonProps) {
             disabled={disabled}
             onPress={onPress}
             activeOpacity={activeOpacity}>
-            <Title>{title}</Title>
+            <Title>{children}</Title>
         </Container>
     );
 }

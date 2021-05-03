@@ -1,6 +1,8 @@
+import { ReactNode } from 'react';
+
 export interface HeaderProps {
     testID?: string;
     back?: boolean;
-    title: string;
     onBack?: () => void;
+    children?: ReactNode;
 }

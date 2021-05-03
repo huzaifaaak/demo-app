@@ -9,7 +9,7 @@ export const Wrapper = styled.View`
     align-items: center;
     padding: ${({
         theme: {
-            components: {Container},
+            components: { Container },
         },
     }) => Container.padding}px;
 `;

@@ -1,6 +1,8 @@
 import React from 'react';
-import styled, { useTheme } from 'styled-components/native';
+
 import Icon from 'react-native-remix-icon';
+
+import styled, { useTheme } from 'styled-components/native';
 
 import { HeaderProps } from './Header.decl';
 
@@ -10,7 +12,7 @@ const Container = styled.View`
     margin-top: 20px;
 `;
 
-const IconBg = styled.TouchableOpacity`
+const BackButton = styled.TouchableOpacity`
     height: 34px;
     width: 34px;
     background-color: ${({ theme: { colors } }) => colors.blackLighter};
@@ -26,21 +28,22 @@ const Heading = styled.Text`
     line-height: 36px;
 `;
 
-export function Header({ testID, back, title, onBack }: HeaderProps) {
+export function Header({ testID, back, onBack, children }: HeaderProps) {
     const {
         components: {
             Pressable: { activeOpacity },
         },
+        colors: { white },
     } = useTheme();
 
     return (
         <Container testID={testID}>
             {back && (
-                <IconBg activeOpacity={activeOpacity} onPress={onBack}>
-                    <Icon name={'arrow-left-line'} size={'24'} color={'white'} />
-                </IconBg>
+                <BackButton activeOpacity={activeOpacity} onPress={onBack}>
+                    <Icon name={'arrow-left-line'} size={'24'} color={white} />
+                </BackButton>
             )}
-            <Heading>{title}</Heading>
+            <Heading>{children}</Heading>
         </Container>
     );
 }

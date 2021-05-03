@@ -1,7 +1,8 @@
 import 'styled-components';
-import {colors} from './colors';
-import {components} from './components';
-import {Font} from './fonts';
+
+import { colors } from './colors';
+import { components } from './components';
+import { Font } from './fonts';
 
 declare module 'styled-components' {
     export interface DefaultTheme {

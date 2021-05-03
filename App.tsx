@@ -1,8 +1,9 @@
 import React from 'react';
-import { Root } from './src/Root';
+
+import { I18NProvider } from './src/i18n';
+
+console.warn = () => {};
 
 export default function App() {
-  return (
-    <Root />
-  )
+    return <I18NProvider />;
 }

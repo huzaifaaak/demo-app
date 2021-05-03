@@ -2,18 +2,36 @@ import { colors } from './colors';
 import { Font } from './fonts';
 
 export const components = {
+    Alert: {
+        h: 38,
+        width: 100,
+        padding: 10,
+        border: 5,
+    },
+    BottomSheet: {
+        border: 10,
+    },
     Pressable: {
         activeOpacity: 0.7,
+        height: 46,
+        paddingVertical: 8,
+        paddingHorizontal: 10,
+        width: 100,
+        margin: 20,
     },
     Container: {
         bg: colors.transparent,
         padding: 20,
+        margin: 20,
     },
     Text: {
         fontSize: 14,
         color: colors.white,
         fontFamily: Font.REGULAR,
         lineHeight: 21,
+        regular: 16,
+        small: 14,
+        large: 24,
     },
     Header: {
         color: colors.white,

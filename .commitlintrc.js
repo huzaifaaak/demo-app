@@ -20,7 +20,7 @@ module.exports = {
         'scope-enum': [
             2,
             'always',
-            ['deps', 'release', 'checkout', 'product', 'settings', 'transactions'],
+            ['deps', 'release', 'ui', 'checkout', 'product', 'settings', 'transactions'],
         ],
     },
 };

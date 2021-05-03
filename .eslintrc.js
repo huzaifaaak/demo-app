@@ -1,4 +1,4 @@
-const { pathGroups, pathGroupsExcludedImportTypes } = getImportOrder();
+const { pathGroups, pathGroupsExcludedImportTypes, internalRegex } = require('./.eslint-import')();
 
 module.exports = {
     root: true,
@@ -13,7 +13,7 @@ module.exports = {
         'plugin:@typescript-eslint/eslint-recommended',
         'plugin:@typescript-eslint/recommended',
         'prettier',
-        'prettier/@typescript-eslint',
+        'prettier/prettier',
         'plugin:import/errors',
         'plugin:import/warnings',
         'plugin:import/typescript',
@@ -23,14 +23,17 @@ module.exports = {
     },
     rules: {
         'no-undef': 'off',
+        'no-shadow': 'off',
         'lines-between-class-members': ['warn', 'always'],
         '@typescript-eslint/interface-name-prefix': 'off',
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/explicit-module-boundary-types': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/no-namespace': 'off',
-        '@typescript-eslint/no-unused-vars': ['warn', { ignoreRestSiblings: true }],
+        '@typescript-eslint/no-unused-vars': ['error', { ignoreRestSiblings: true }],
+        '@typescript-eslint/ban-ts-comment': 'off',
         'import/default': 'off',
+        'import/no-named-as-default': 'off',
         'import/order': [
             'error',
             {
@@ -46,7 +49,7 @@ module.exports = {
         ],
     },
     settings: {
-        'import/internal-regex': internalRegex,
+        // 'import/internal-regex': internalRegex,
         'import/parsers': {
             '@typescript-eslint/parser': ['.ts', '.tsx'],
         },
@@ -58,40 +61,3 @@ module.exports = {
         },
     },
 };
-
-function getImportOrder() {
-    const tsconfig = require('./tsconfig.json');
-
-    const order = [
-        ['react', 'external', 'before'],
-        ['*react-native*', 'external', 'before'],
-    ];
-
-    const tsPaths = Object.keys(tsconfig.compilerOptions.paths || {}).reduce((acc, key) => {
-        const newKey = key.replace(/\/\*/g, '');
-        if (!acc.find((o) => o[0] === `${newKey}*`)) {
-            acc.push([`^${newKey}*`, 'internal', 'before']);
-        }
-
-        return acc;
-    }, []);
-
-    const importOrder = [...order, ...tsPaths].reduce(
-        (acc, [pattern, group, position]) => {
-            acc.pathGroups.push({
-                pattern,
-                group,
-                position,
-            });
-            acc.pathGroupsExcludedImportTypes.push(pattern);
-            return acc;
-        },
-        {
-            pathGroups: [],
-            pathGroupsExcludedImportTypes: [],
-            internalRegex: `^@(${tsPaths.map((o) => o[0].replace(/\*|@/g, '')).join('|')})`,
-        }
-    );
-
-    return importOrder;
-}

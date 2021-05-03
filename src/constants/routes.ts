@@ -3,6 +3,7 @@ export namespace Routes {
         WELCOME: 'welcome',
         LOGIN: 'login',
         REGISTER: 'register',
+        BUSINESS_INFO: 'businessInfo',
         APP: 'app',
         CHECK_AUTH: 'check-auth',
     };
@@ -32,8 +33,9 @@ export namespace Routes {
 function scopedRoute<T>(obj: Record<keyof T, string>, scope: string) {
     return Object.entries(obj).reduce(
         (acc, [key, value]) => ({
+            ...acc,
             [key]: `${scope}/${value}`,
         }),
         {}
-    ) as {[K in keyof T]: string};
+    ) as { [K in keyof T]: string };
 }
