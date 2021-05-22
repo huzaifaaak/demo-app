@@ -1,25 +1,23 @@
-export function fetcher<T, K, M, J, L, N, O>({
+export function fetcher<TData, A, B, C, D, E, F>({
     setData,
     setLoading,
     setError,
+    setIssues,
     setAuthHeader,
     setFullUrl,
-    parseJSON,
-    setIssues,
 }: {
-    setData: T;
-    setLoading: K;
-    setError: M;
-    setAuthHeader: J;
-    setFullUrl: L;
-    parseJSON: N;
-    setIssues: O;
+    setData: A;
+    setLoading: B;
+    setError: C;
+    setIssues: D;
+    setAuthHeader: E;
+    setFullUrl: F;
 }) {
     return function fetcherInstance(
         url: string,
         method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
         options: any
-    ) {
+    ): Promise<TData> {
         const _setLoading = setLoading as any;
         const _setIssues = setIssues as any;
         const _setError = setError as any;
@@ -28,20 +26,24 @@ export function fetcher<T, K, M, J, L, N, O>({
         _setError(null);
         _setIssues([]);
 
+        const hasBody = method !== 'GET';
+
         return fetch(
             (setFullUrl as any)(url),
             (setAuthHeader as any)({
                 ...options,
-                body: JSON.stringify(options.body),
+                body: hasBody ? JSON.stringify(options.body) : null,
                 method,
             })
         )
-            .then((response) => (parseJSON as any)(response))
+            .then((response) => response.json())
             .then((data) => {
-                if (data.ok) {
+                if (!data.statusCode) {
                     (setData as any)(data);
                     return data;
-                } else throw data;
+                } else {
+                    throw data;
+                }
             })
             .catch((error) => {
                 _setError(error);

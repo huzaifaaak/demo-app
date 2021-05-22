@@ -9,6 +9,7 @@ export const FormContext = createContext<{
     control?: Control<Record<string, any>> | null;
     handleSubmit?: any;
     errors?: any;
+    error?: any;
     issues: UseFetchIssue[];
 }>({
     issues: [],

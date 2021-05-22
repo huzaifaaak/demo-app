@@ -1,5 +1,6 @@
-export function createTranslation<T>(obj: T): { translation: T } {
+export function createTranslation(content: Record<string, any>, error: Record<string, any>) {
     return {
-        translation: obj,
+        content,
+        error,
     };
 }

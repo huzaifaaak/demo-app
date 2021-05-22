@@ -6,6 +6,7 @@ export namespace Routes {
         BUSINESS_INFO: 'businessInfo',
         APP: 'app',
         CHECK_AUTH: 'check-auth',
+        FORGOT: 'forgotPassword',
     };
 
     export const App = {

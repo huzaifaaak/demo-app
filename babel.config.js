@@ -10,8 +10,6 @@ const alias = Object.entries(tsconfig.compilerOptions.paths).reduce((acc, [key, 
     return acc;
 }, {});
 
-console.log(alias);
-
 module.exports = {
     presets: ['module:metro-react-native-babel-preset'],
     plugins: [

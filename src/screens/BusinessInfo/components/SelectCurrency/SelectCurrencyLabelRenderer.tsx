@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { SelectLabelRenderer } from '@components/Select';
+import { SelectLabelRenderer } from '@components/Form/Select';
 
-import { Currency } from '../../BusinessInfo.interface';
+import { Currency } from '../../BusinessInfo.decl';
 import { Wrapper, Name, Emoji } from '../../BusinessInfo.styled';
 
 export const SelectCurrencyLabelRenderer: SelectLabelRenderer<Currency> = ({ name, symbol }) => {

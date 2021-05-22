@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { SelectLabelRenderer } from '@components/Select';
+import { SelectLabelRenderer } from '@components/Form/Select';
 
-import { Business } from '../../BusinessInfo.interface';
+import { Business } from '../../BusinessInfo.decl';
 import { Wrapper, Name } from '../../BusinessInfo.styled';
 
 export const SelectCategoryLabelRenderer: SelectLabelRenderer<Business> = ({ type }) => {

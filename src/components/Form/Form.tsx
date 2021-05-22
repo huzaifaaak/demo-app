@@ -16,6 +16,7 @@ export function Form<T = any, K = any>({
     issues = [],
     onSubmit = noop,
     children,
+    error,
 }: FormProps<T, K>) {
     const formProps = useMemo<UseFormProps<FormProps['initialValue'] | any>>(
         () => ({
@@ -37,9 +38,10 @@ export function Form<T = any, K = any>({
             control,
             handleSubmit: handleSubmit(onSubmit as SubmitHandler<T>),
             errors,
+            error,
             issues,
         }),
-        [initialValue, control, handleSubmit, errors, issues, onSubmit]
+        [initialValue, control, handleSubmit, errors, error, issues, onSubmit]
     );
 
     return (

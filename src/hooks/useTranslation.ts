@@ -5,9 +5,9 @@ import { useTranslation as useInternalTranslation } from 'react-i18next';
 export function useTranslation() {
     const { t: translate, ...rest } = useInternalTranslation();
 
-    const te = useCallback((key: string) => translate(`errors.${key}`), [translate]);
+    const te = useCallback((key: string) => translate(`error:${key}`), [translate]);
 
-    const tc = useCallback((key: string) => translate(`content.${key}`), [translate]);
+    const tc = useCallback((key: string) => translate(`content:${key}`), [translate]);
 
     const returnData = useMemo(
         () => ({

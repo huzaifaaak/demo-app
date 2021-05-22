@@ -30,7 +30,8 @@
             "@utils/*": ["src/utils/*"],
             "@locales/*": ["src/locales/*"],
             "@hooks/*": ["src/hooks/*"],
-            "@fetch": ["src/fetch"]
+            "@fetch": ["src/fetch"],
+            "@meta": ["src/meta"]
         }
     },
     "exclude": ["node_modules", "babel.config.js", "metro.config.js", "jest.config.js"]

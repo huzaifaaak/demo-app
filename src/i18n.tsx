@@ -24,7 +24,8 @@ i18next
     .init({
         lng: 'en',
         fallbackLng: 'en',
-        defaultNS: 'translation',
+        ns: ['content', 'error'],
+        defaultNS: 'content',
         debug: true,
         react: {
             useSuspense: false,

@@ -1,5 +1,5 @@
 export type UseFetchOptions<TBody = Record<string, any>> = Omit<RequestInit, 'method' | 'body'> & {
-    body: TBody;
+    body?: TBody;
 };
 
 export const FetchMethods = {
@@ -10,10 +10,10 @@ export const FetchMethods = {
     DELETE: 'DELETE',
 } as const;
 
-export type UseFetchCaller<TBody = Record<string, any>> = (
+export type UseFetchCaller<TData = any, TBody = Record<string, any>> = (
     url: string,
-    options: UseFetchOptions<TBody>
-) => void;
+    options?: UseFetchOptions<TBody>
+) => Promise<TData>;
 
 export interface UseFetchIssue {
     field: string;
@@ -21,29 +21,38 @@ export interface UseFetchIssue {
     meta: any;
 }
 
-export type UseFetchReturnType<TData, TBody, TError, K = keyof typeof FetchMethods> = {
+export interface UseFetchError {
+    error: string;
+    issues?: UseFetchIssue[];
+    message?: string;
+    status: number;
+    ok: boolean;
+    statusCode: number;
+}
+
+export type UseFetchReturnType<TData, TBody, K = keyof typeof FetchMethods> = {
     loading: boolean;
     data: TData | null;
-    error: TError | null;
+    error: UseFetchError | null;
     issues: UseFetchIssue[];
 } & (K extends 'GET'
     ? {
-          GET: UseFetchCaller<TBody>;
+          GET: UseFetchCaller<TData, never>;
       }
     : K extends 'POST'
     ? {
-          POST: UseFetchCaller<TBody>;
+          POST: UseFetchCaller<TData, TBody>;
       }
     : K extends 'PUT'
     ? {
-          PUT: UseFetchCaller<TBody>;
+          PUT: UseFetchCaller<TData, TBody>;
       }
     : K extends 'PATCH'
     ? {
-          PATCH: UseFetchCaller<TBody>;
+          PATCH: UseFetchCaller<TData, TBody>;
       }
     : K extends 'DELETE'
     ? {
-          DELETE: UseFetchCaller<TBody>;
+          DELETE: UseFetchCaller<TData, never>;
       }
     : Record<string, any>);

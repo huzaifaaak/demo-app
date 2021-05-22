@@ -53,7 +53,6 @@ export function BottomSheet({ id, children }: BottomSheetProps) {
                 <Container style={StyleSheet.absoluteFill}>
                     <Sheet
                         ref={createSheetRef(id)}
-                        index={-1}
                         snapPoints={snapPoints}
                         backdropComponent={BottomSheetBackdrop as React.FC<any>}
                         backgroundComponent={BottomSheetBackground as React.FC<any>}

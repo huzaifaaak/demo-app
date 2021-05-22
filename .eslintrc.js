@@ -32,6 +32,7 @@ module.exports = {
         '@typescript-eslint/no-namespace': 'off',
         '@typescript-eslint/no-unused-vars': ['error', { ignoreRestSiblings: true }],
         '@typescript-eslint/ban-ts-comment': 'off',
+        'react-native/no-inline-styles': 'off',
         'import/default': 'off',
         'import/no-named-as-default': 'off',
         'import/order': [

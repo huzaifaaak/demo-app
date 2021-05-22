@@ -9,7 +9,6 @@ import { HeaderProps } from './Header.decl';
 const Container = styled.View`
     flex-direction: row;
     width: 100%;
-    margin-top: 20px;
 `;
 
 const BackButton = styled.TouchableOpacity`

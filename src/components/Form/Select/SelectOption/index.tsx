@@ -25,7 +25,7 @@ export function SelectOption<T = Record<string, any>>({
     labelKey,
     optionRenderer,
 }: SelectOptionProps<T>) {
-    const { close } = useBottomSheet(sheetId);
+    const { close, collapse } = useBottomSheet(sheetId);
 
     const {
         colors: { white },
@@ -33,6 +33,7 @@ export function SelectOption<T = Record<string, any>>({
 
     const onItemPress = () => {
         handlePress(item);
+        collapse();
         close();
     };
 

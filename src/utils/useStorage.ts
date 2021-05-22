@@ -36,7 +36,7 @@ export function useSerializedStorage<T>(key: string) {
 
     return useMemo(
         () => ({
-            storedValue: storedValue ? JSON.parse(storedValue) : storedValue,
+            storedValue: (storedValue ? JSON.parse(storedValue) : storedValue) as T | null,
             setStorageValue: (item: T) => _setStorageValue(JSON.stringify(item)),
         }),
         [storedValue, _setStorageValue]

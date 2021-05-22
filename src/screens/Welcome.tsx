@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StatusBar } from 'react-native';
+import { StatusBar, View } from 'react-native';
 
 import { useNavigation } from '@react-navigation/core';
 
@@ -8,30 +8,37 @@ import { Launch } from '@assets/images/launch';
 import { Logo } from '@assets/images/logo';
 
 import { Button } from '@components/Button';
+import { Container } from '@components/Container';
+import { Spacer } from '@components/Spacer';
+import { TextView } from '@components/TextView';
 
 import { Routes } from '@constants/routes';
 
 import { useTranslation } from '@hooks/useTranslation';
 
-import { Container, Wrapper, Description, AccountExist, LoginText } from './Welcome.styled';
-
 export function Welcome() {
     const { navigate } = useNavigation();
     const { tc } = useTranslation();
+
+    const goToLogin = () => navigate(Routes.Base.LOGIN);
 
     return (
         <Container>
             <StatusBar hidden />
             <Launch />
-            <Wrapper>
-                <Logo />
-                <Description>{tc('welcome.description')}</Description>
+            <Spacer>
+                <View style={{ flex: 1, alignItems: 'center' }}>
+                    <Logo />
+                </View>
+                <TextView>{tc('welcome.description')}</TextView>
                 <Button onPress={() => navigate(Routes.Base.REGISTER)}>
                     {tc('welcome.cta.create')}
                 </Button>
-                <AccountExist>{tc('welcome.accountExists')}</AccountExist>
-                <LoginText>{tc('welcome.cta.login')}</LoginText>
-            </Wrapper>
+                <TextView>{tc('welcome.accountExists')}</TextView>
+                <TextView link onPress={goToLogin}>
+                    {tc('welcome.cta.login')}
+                </TextView>
+            </Spacer>
         </Container>
     );
 }

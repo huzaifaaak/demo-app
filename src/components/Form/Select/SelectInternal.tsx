@@ -75,7 +75,7 @@ export function SelectInternal<T>({
                 <BottomSheetFlatList<T>
                     data={options}
                     renderItem={renderOption}
-                    keyExtractor={(item, index) => item[valueKey]}
+                    keyExtractor={(item) => item[valueKey] as any}
                 />
             </BottomSheet>
         </>

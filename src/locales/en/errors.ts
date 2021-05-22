@@ -1,6 +1,7 @@
 export const Errors = {
     auth: {
         emailExists: 'Email already exists',
+        invalidPassword: 'Invalid Password',
         register: {
             email: {
                 invalidString: 'Email is required',

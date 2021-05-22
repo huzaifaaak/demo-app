@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { SelectOptionRenderer } from '@components/Select';
+import { SelectOptionRenderer } from '@components/Form/Select';
 
-import { Country } from '../../BusinessInfo.interface';
+import { Country } from '../../BusinessInfo.decl';
 import { Wrapper, Name, Emoji } from '../../BusinessInfo.styled';
 
 export const SelectCountryOptionRenderer: SelectOptionRenderer<Country> = ({ name, flag }) => {
