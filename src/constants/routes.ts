@@ -16,6 +16,8 @@ export namespace Routes {
         SETTINGS: 'settings',
     };
 
+    export const BottomTabBar = 'bottomTabBar';
+
     export const Products = scopedRoute(
         {
             LIST_ITEMS: 'list-items',

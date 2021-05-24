@@ -12,6 +12,8 @@ import { SignUp } from '@screens/Signup';
 import { Checkout } from '../screens/Checkout';
 import { Welcome } from '../screens/Welcome';
 
+import { BottomTabs } from './bottomTabs.routes';
+
 const Stack = createStackNavigator();
 
 export function BaseRoutes() {
@@ -21,13 +23,14 @@ export function BaseRoutes() {
                 headerShown: false,
                 cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
             }}
-            initialRouteName={Routes.Base.WELCOME}>
+            initialRouteName={Routes.BottomTabBar}>
             <Stack.Screen name={Routes.Base.WELCOME} component={Welcome} />
             <Stack.Screen name={Routes.Base.LOGIN} component={Login} />
             <Stack.Screen name={Routes.Base.FORGOT} component={ForgotPassword} />
             <Stack.Screen name={Routes.Base.REGISTER} component={SignUp} />
             <Stack.Screen name={Routes.Base.BUSINESS_INFO} component={BusinessInfo} />
             <Stack.Screen name={Routes.App.CHECKOUT} component={Checkout} />
+            <Stack.Screen name={Routes.BottomTabBar} component={BottomTabs} />
         </Stack.Navigator>
     );
 }
