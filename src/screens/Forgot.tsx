@@ -39,8 +39,8 @@ export function ForgotPassword() {
     return (
         <Container keyboardShouldPersistTaps="handled">
             <Spacer>
-                <Header onBack={goBack} back>
-                    Forgot Password
+                <Header onBack={goBack}>
+                    <Header.Title>Forgot Password</Header.Title>
                 </Header>
                 <TextView textAlign="left">
                     Enter your email address to receive a link. You can click on it to reset your

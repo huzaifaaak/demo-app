@@ -113,7 +113,9 @@ export function Login() {
         <Form.Wrapper error={error} onSubmit={onSubmit} issues={issues}>
             <Container keyboardShouldPersistTaps="handled">
                 <Spacer>
-                    <Header>{tc('login.header')}</Header>
+                    <Header>
+                        <Header.Title>{tc('login.header')}</Header.Title>
+                    </Header>
                     <Form.Error />
                     {params?.hasForgottenPassword && (
                         <Banner type="success" message={tc('login.hasForgottenPassword')} />

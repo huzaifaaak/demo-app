@@ -1,12 +1,13 @@
 import React from 'react';
 
-import Icon from 'react-native-remix-icon';
-
 import styled, { css, useTheme } from 'styled-components/native';
+
+import IconArrowRightSLine from '@icons/ArrowRightSLine';
 
 import { useBottomSheet } from '@components/BottomSheet';
 import { ErrorText } from '@components/ErrorText';
 import { Label, RedText } from '@components/Form/TextInput';
+import { Icon } from '@components/Icon';
 
 import { SelectButtonProps } from './SelectButton.decl';
 
@@ -67,7 +68,7 @@ export function SelectButton({
             </Wrapper>
             <SelectButtonWrapper error={error} onPress={handlePress}>
                 <LeftView>{children}</LeftView>
-                <Icon name={'arrow-right-s-line'} size={24} color={greyDark} />
+                <Icon icon={IconArrowRightSLine} fill={greyDark} />
             </SelectButtonWrapper>
             {error && <ErrorText>{error}</ErrorText>}
         </Container>

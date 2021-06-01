@@ -1,9 +1,13 @@
-import React from 'react';
-
-import Icon from 'react-native-remix-icon';
+import React, { useMemo } from 'react';
 
 import styled, { useTheme } from 'styled-components/native';
 
+import IconArrowLeftLine from '@icons/ArrowLeftLine';
+
+import { Icon } from '@components/Icon';
+import { IconBg } from '@components/IconBg';
+
+import { HeaderContext } from './Header.context';
 import { HeaderProps } from './Header.decl';
 
 const Container = styled.View`
@@ -11,38 +15,25 @@ const Container = styled.View`
     width: 100%;
 `;
 
-const BackButton = styled.TouchableOpacity`
-    height: 34px;
-    width: 34px;
-    background-color: ${({ theme: { colors } }) => colors.blackLighter};
-    border-radius: 5px;
-    margin-right: 15px;
-    align-items: center;
-    justify-content: center;
-`;
-
-const Heading = styled.Text`
-    font-family: ${({ theme: { font } }) => font.BOLD};
-    font-size: 24px;
-    line-height: 36px;
-`;
-
-export function Header({ testID, back, onBack, children }: HeaderProps) {
+export function Header({ onBack, children }: HeaderProps) {
     const {
         components: {
             Pressable: { activeOpacity },
         },
-        colors: { white },
     } = useTheme();
 
+    const contextValue = useMemo(() => ({ leftMargin: !!onBack }), [onBack]);
+
     return (
-        <Container testID={testID}>
-            {back && (
-                <BackButton activeOpacity={activeOpacity} onPress={onBack}>
-                    <Icon name={'arrow-left-line'} size={'24'} color={white} />
-                </BackButton>
-            )}
-            <Heading>{children}</Heading>
-        </Container>
+        <HeaderContext.Provider value={contextValue}>
+            <Container>
+                {onBack && (
+                    <IconBg activeOpacity={activeOpacity} onPress={onBack}>
+                        <Icon icon={IconArrowLeftLine} size={24} />
+                    </IconBg>
+                )}
+                {children}
+            </Container>
+        </HeaderContext.Provider>
     );
 }

@@ -1,10 +1,11 @@
 import React from 'react';
 
-import Icon from 'react-native-remix-icon';
+import styled from 'styled-components/native';
 
-import styled, { useTheme } from 'styled-components/native';
+import IconCheckFill from '@icons/CheckFill';
 
 import { useBottomSheet } from '@components/BottomSheet';
+import { Icon } from '@components/Icon';
 
 import { SelectOptionProps } from './SelectOption.decl';
 
@@ -27,10 +28,6 @@ export function SelectOption<T = Record<string, any>>({
 }: SelectOptionProps<T>) {
     const { close, collapse } = useBottomSheet(sheetId);
 
-    const {
-        colors: { white },
-    } = useTheme();
-
     const onItemPress = () => {
         handlePress(item);
         collapse();
@@ -40,7 +37,7 @@ export function SelectOption<T = Record<string, any>>({
     return (
         <Container onPress={onItemPress}>
             {optionRenderer ? optionRenderer(item) : <Text>{item[labelKey]}</Text>}
-            {isSelected && <Icon name={'ri-check-fill'} size={'24'} color={white} />}
+            {isSelected && <Icon icon={IconCheckFill} />}
         </Container>
     );
 }

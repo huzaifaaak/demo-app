@@ -80,7 +80,9 @@ export function BusinessInfo() {
             onSubmit={onSubmit}>
             <Container justifyContent="space-between" flexGrow={1}>
                 <Spacer>
-                    <Header>{tc('businessInfo.header')}</Header>
+                    <Header>
+                        <Header.Title>{tc('businessInfo.header')}</Header.Title>
+                    </Header>
                     <TextView textAlign="left">{tc('businessInfo.info')}</TextView>
                     <Form.Error />
                     <Select<Country>

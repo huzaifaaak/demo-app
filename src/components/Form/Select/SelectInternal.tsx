@@ -71,7 +71,9 @@ export function SelectInternal<T>({
                 {selected ? labelRenderer(selected) : <Text>{placeholder}</Text>}
             </SelectButton>
             <BottomSheet id={sheetId.current}>
-                <Header>{label}</Header>
+                <Header>
+                    <Header.Title>{label}</Header.Title>
+                </Header>
                 <BottomSheetFlatList<T>
                     data={options}
                     renderItem={renderOption}

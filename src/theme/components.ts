@@ -39,6 +39,11 @@ export const components = {
         fontFamily: Font.BOLD,
         bg: colors.transparent,
         textTransform: 'none',
+        lineHeight: 36,
+        spacing: 15,
+        iconBgBorder: 10,
+        iconBgHeight: 34,
+        iconBgWidth: 34,
     },
     Input: {
         color: colors.white,

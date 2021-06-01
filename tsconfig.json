@@ -17,6 +17,7 @@
         "resolveJsonModule": true,
         "baseUrl": ".",
         "paths": {
+            "@icons/*": ["node_modules/react-native-remix-icon/src/icons/*"],
             "@assets": ["src/assets"],
             "@assets/*": ["src/assets/*"],
             "@components/*": ["src/components/*"],

@@ -1,8 +1,9 @@
 import React from 'react';
 
-import Icon from 'react-native-remix-icon';
-
 import styled, { css, useTheme } from 'styled-components/native';
+
+import IconCheckboxCircleFill from '@icons/CheckboxCircleFill';
+import IconInformationFill from '@icons/InformationFill';
 
 import { BannerProps } from './Banner.decl';
 
@@ -43,16 +44,16 @@ export function Banner({ message, type }: BannerProps) {
     const {
         colors: { greenLighter, redLighter, greenDarker, redDarker },
     } = useTheme();
-    let iconName = '';
+    let Icon;
     let color = '';
     let bgColor = '';
 
     if (type === 'success') {
-        iconName = 'checkbox-circle-fill';
+        Icon = IconCheckboxCircleFill;
         color = greenDarker;
         bgColor = greenLighter;
     } else {
-        iconName = 'information-fill';
+        Icon = IconInformationFill;
         color = redDarker;
         bgColor = redLighter;
     }
@@ -61,7 +62,7 @@ export function Banner({ message, type }: BannerProps) {
         <Container color={bgColor}>
             <Wrapper>
                 <IconView>
-                    <Icon name={iconName} size={'18'} color={color} />
+                    <Icon size={18} color={color} />
                 </IconView>
                 <Text color={color}>{message}</Text>
             </Wrapper>

@@ -115,7 +115,9 @@ export function SignUp() {
         <Form.Wrapper<IAuth.RegisterArgs> error={error} onSubmit={onSubmit} issues={registerIssues}>
             <Container keyboardShouldPersistTaps="handled">
                 <Spacer>
-                    <Header>{tc('signup.header')}</Header>
+                    <Header>
+                        <Header.Title>{tc('signup.header')}</Header.Title>
+                    </Header>
                     <Form.Error />
                     <Spacer horizontal>
                         <TextInput name="firstName" label="First name" />
