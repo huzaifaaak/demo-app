@@ -43,9 +43,9 @@ const BottomSheetHandle = styled.View`
     border-radius: 999px;
 `;
 
-export function BottomSheet({ id, children }: BottomSheetProps) {
+export function BottomSheet({ id, children, maxSnap = '80%' }: BottomSheetProps) {
     const { createSheetRef } = useContext(BottomSheetContext);
-    const snapPoints = useMemo(() => ['0%', '80%'], []);
+    const snapPoints = useMemo(() => ['0%', maxSnap], [maxSnap]);
 
     return (
         <>

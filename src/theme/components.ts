@@ -110,6 +110,9 @@ export const components = {
         bg: colors.transparent,
         px: 20,
     },
+    product: {
+        actionButtonHeight: 80,
+    },
     ColorRandomizer: {
         h: 100,
         borderRadius: 5,

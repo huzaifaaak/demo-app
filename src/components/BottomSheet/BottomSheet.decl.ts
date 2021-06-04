@@ -7,4 +7,5 @@ export interface BottomSheetProviderProps {
 export interface BottomSheetProps {
     id: string | number;
     children?: React.ReactNode;
+    maxSnap?: string;
 }

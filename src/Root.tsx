@@ -6,6 +6,7 @@ import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 
 import { useTranslation } from 'react-i18next';
 
+import { PortalProvider } from '@gorhom/portal';
 import { ThemeProvider } from 'styled-components/native';
 
 import './overrides/Text.override';
@@ -31,7 +32,9 @@ export function Root() {
                     <StatusBar backgroundColor={DarkTheme.colors.background} />
                     <ThemeProvider theme={Theme}>
                         <BottomSheetProvider>
-                            <BaseRoutes />
+                            <PortalProvider>
+                                <BaseRoutes />
+                            </PortalProvider>
                         </BottomSheetProvider>
                     </ThemeProvider>
                 </MetaProvider>
