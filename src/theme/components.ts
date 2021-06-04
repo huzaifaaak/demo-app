@@ -110,6 +110,9 @@ export const components = {
         bg: colors.transparent,
         px: 20,
     },
+    TabBar: {
+        height: 40,
+    },
     product: {
         actionButtonHeight: 80,
     },

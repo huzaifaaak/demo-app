@@ -31,11 +31,13 @@
         "react-native": "0.64.0",
         "react-native-gesture-handler": "1.10.3",
         "react-native-localize": "2.0.2",
+        "react-native-pager-view": "5.1.10",
         "react-native-reanimated": "2.1.0",
         "react-native-remix-icon": "0.3.0",
         "react-native-safe-area-context": "3.2.0",
         "react-native-screens": "3.1.0",
         "react-native-svg": "12.1.1-0",
+        "react-native-tab-view": "3.0.1",
         "reanimated-bottom-sheet": "1.0.0-alpha.22",
         "styled-components": "5.2.3",
         "use-async-effect": "2.2.3"
