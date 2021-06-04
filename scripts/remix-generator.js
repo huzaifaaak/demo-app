@@ -8,7 +8,13 @@ const exists = fs.existsSync(BASE_PATH);
 
 if (exists) {
     const files = fs.readdirSync(path.resolve(BASE_PATH, './src/icons'));
-    const content = [];
+    const content = [
+        `declare interface IconProps {`,
+        `    width?: number`,
+        `    height?: number`,
+        `    fill?: string`,
+        `}\n`,
+    ];
 
     files.forEach((file) => {
         const component = file.replace('.js', '');
@@ -17,7 +23,7 @@ if (exists) {
             [
                 `declare module '@icons/${component}' {`,
                 `    import { ComponentType } from 'react';`,
-                `    const Icon${component}: ComponentType<{ width?: number; height?: number; fill?: string }>;`,
+                `    const Icon${component}: ComponentType<IconProps>;`,
                 `    export default Icon${component};`,
                 `}`,
             ].join('\n')

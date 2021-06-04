@@ -5,7 +5,7 @@ import { SubmitHandler, useForm, UseFormProps } from 'react-hook-form';
 import { PortalProvider } from '@gorhom/portal';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { noop } from '@components/util';
+import { noop } from '@components/utils';
 
 import { FormContext } from './Form.context';
 import { FormProps } from './Form.decl';

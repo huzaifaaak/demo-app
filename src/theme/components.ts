@@ -45,7 +45,7 @@ export const components = {
         iconBgHeight: 34,
         iconBgWidth: 34,
     },
-    Input: {
+    TextInput: {
         color: colors.white,
         placeholderTextColor: colors.grey,
         bg: colors.blackLighter,
@@ -53,17 +53,30 @@ export const components = {
         focusBorderColor: colors.primary,
         textAlignVertical: 'center',
         focusable: true,
-        px: 20,
+        icon: {
+            spacing: 10,
+            size: 24,
+            color: colors.white,
+            weight: 'bold',
+        },
+        px: 15,
+        py: 5,
         h: 46,
         borderRadius: 5,
         errorColor: colors.red,
     },
-    Textarea: {
+    Multiline: {
         color: colors.white,
         placeholderTextColor: colors.grey,
         bg: colors.blackLighter,
-        borderColor: colors.transparent,
+        borderColor: colors.blackLighter,
         focusBorderColor: colors.primary,
+        textAlignVertical: 'top',
+        focusable: true,
+        p: 10,
+        minH: 72,
+        borderRadius: 5,
+        errorColor: colors.red,
     },
     Button: {
         color: colors.white,
@@ -96,5 +109,9 @@ export const components = {
         color: colors.white,
         bg: colors.transparent,
         px: 20,
+    },
+    ColorRandomizer: {
+        h: 100,
+        borderRadius: 5,
     },
 };

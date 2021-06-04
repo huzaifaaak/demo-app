@@ -5,6 +5,8 @@ import styled, { css, useTheme } from 'styled-components/native';
 import IconCheckboxCircleFill from '@icons/CheckboxCircleFill';
 import IconInformationFill from '@icons/InformationFill';
 
+import { Icon } from '@components/Icon';
+
 import { BannerProps } from './Banner.decl';
 
 const Container = styled.View<{ color: string }>(
@@ -44,16 +46,16 @@ export function Banner({ message, type }: BannerProps) {
     const {
         colors: { greenLighter, redLighter, greenDarker, redDarker },
     } = useTheme();
-    let Icon;
+    let icon;
     let color = '';
     let bgColor = '';
 
     if (type === 'success') {
-        Icon = IconCheckboxCircleFill;
+        icon = IconCheckboxCircleFill;
         color = greenDarker;
         bgColor = greenLighter;
     } else {
-        Icon = IconInformationFill;
+        icon = IconInformationFill;
         color = redDarker;
         bgColor = redLighter;
     }
@@ -62,7 +64,7 @@ export function Banner({ message, type }: BannerProps) {
         <Container color={bgColor}>
             <Wrapper>
                 <IconView>
-                    <Icon size={18} color={color} />
+                    <Icon icon={icon} size={18} fill={color} />
                 </IconView>
                 <Text color={color}>{message}</Text>
             </Wrapper>

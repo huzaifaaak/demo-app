@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import { noop } from '@components/util';
+import { noop } from '@components/utils';
 
 import { MetaContextType } from './Meta.decl';
 

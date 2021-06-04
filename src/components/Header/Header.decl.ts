@@ -16,7 +16,7 @@ export interface HeaderActionsProps {
 
 export interface HeaderActionProps {
     onPress?(): void;
-    icon: ComponentType<{ height?: number; width?: number; fill?: string }>;
+    icon: ComponentType<IconProps>;
 }
 
 export interface HeaderComponent {

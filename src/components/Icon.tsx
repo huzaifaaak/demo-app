@@ -2,13 +2,13 @@ import React, { ComponentType } from 'react';
 
 import { useTheme } from 'styled-components/native';
 
-export interface IconProps {
-    icon: ComponentType<{ height?: number; width?: number; fill?: string }>;
+export interface WrappedIconProps {
+    icon: ComponentType<IconProps>;
     size?: number;
     fill?: string;
 }
 
-export function Icon({ icon: WrappedIcon, size = 24, fill }: IconProps) {
+export function Icon({ icon: WrappedIcon, size = 24, fill }: WrappedIconProps) {
     const {
         colors: { white },
     } = useTheme();

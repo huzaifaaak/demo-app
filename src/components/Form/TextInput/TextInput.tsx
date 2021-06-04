@@ -1,8 +1,10 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 
 import { Controller } from 'react-hook-form';
 
-import styled, { css } from 'styled-components/native';
+import styled, { css, useTheme } from 'styled-components/native';
+
+import { Icon } from '@components/Icon';
 
 import { useTranslation } from '@hooks/useTranslation';
 
@@ -46,28 +48,111 @@ export const RedText = styled(Label)<{
     `
 );
 
-const Input = styled.TextInput<{
+export const InputWrapper = styled.View<{
     error?: string;
 }>(
     ({
         error,
         theme: {
-            components: { Input },
+            components: { TextInput },
         },
     }) => css`
+        flex-direction: row;
+        align-items: center;
+        padding: ${TextInput.py}px ${TextInput.px}px;
         border-width: 1px;
-        background-color: ${Input.bg};
-        height: ${Input.h}px;
-        border-radius: ${Input.borderRadius}px;
-        border-color: ${error ? Input.errorColor : Input.borderColor};
-        color: ${Input.color};
+        background-color: ${TextInput.bg};
+        height: ${TextInput.h}px;
+        border-radius: ${TextInput.borderRadius}px;
+        border-color: ${error ? TextInput.errorColor : TextInput.borderColor};
     `
 );
 
-export function TextInput({ name, label, required = true, secure, keyboardType }: TextInputProps) {
+const Input = styled.TextInput<{ alignRight?: boolean }>(
+    ({
+        alignRight,
+        theme: {
+            components: { TextInput },
+        },
+    }) => css`
+        width: 100%;
+        flex-shrink: 1;
+        padding: 0;
+        border-width: 0;
+        background-color: transparent;
+        color: ${TextInput.color};
+        text-align: ${alignRight ? 'right' : 'left'};
+    `
+);
+
+const IconContainer = styled.View<{ alignRight?: boolean }>(
+    ({
+        alignRight,
+        theme: {
+            components: {
+                TextInput: { icon },
+            },
+        },
+    }) => {
+        const margin = alignRight ? 'margin-left' : 'margin-right';
+
+        return css`
+            ${margin}: ${icon.spacing}px;
+        `;
+    }
+);
+
+const TextIcon = styled.Text(
+    ({
+        theme: {
+            components: {
+                TextInput: { icon },
+            },
+        },
+    }) => css`
+        flex-shrink: 0;
+        font-size: ${icon.size}px;
+        font-weight: ${icon.weight};
+        line-height: ${icon.size + 5}px;
+        color: ${icon.color};
+    `
+);
+
+export function TextInput({
+    name,
+    label,
+    required = true,
+    secure,
+    keyboardType,
+    prefix,
+    alignRight,
+}: TextInputProps) {
     const { control, issues } = useContext(FormContext) || {};
+    const {
+        components: {
+            TextInput: { icon: TextInputIcon },
+        },
+    } = useTheme();
     const { te } = useTranslation();
     const error = useMemo(() => getIssue(issues, name, te), [issues, name, te]);
+    const shouldRenderIcon = !!prefix;
+    const renderIcon = useCallback(() => {
+        if (prefix) {
+            if (typeof prefix === 'string') {
+                return (
+                    <IconContainer alignRight={alignRight}>
+                        <TextIcon>{prefix}</TextIcon>
+                    </IconContainer>
+                );
+            }
+
+            return (
+                <IconContainer alignRight={alignRight}>
+                    <Icon icon={prefix} size={TextInputIcon.size} fill={TextInputIcon.color} />
+                </IconContainer>
+            );
+        }
+    }, [prefix, TextInputIcon.size, TextInputIcon.color, alignRight]);
 
     return (
         <Controller
@@ -79,13 +164,17 @@ export function TextInput({ name, label, required = true, secure, keyboardType }
                         <Label>{label}</Label>
                         {required && <RedText required>*</RedText>}
                     </Wrapper>
-                    <Input
-                        error={error}
-                        onChangeText={onChange}
-                        secureTextEntry={secure}
-                        keyboardType={keyboardType}
-                        value={value}
-                    />
+                    <InputWrapper error={error}>
+                        {!alignRight && shouldRenderIcon && renderIcon()}
+                        <Input
+                            alignRight={alignRight}
+                            onChangeText={onChange}
+                            secureTextEntry={secure}
+                            keyboardType={keyboardType}
+                            value={value}
+                        />
+                        {alignRight && shouldRenderIcon && renderIcon()}
+                    </InputWrapper>
                     {!!error && <RedText>{error}</RedText>}
                 </Container>
             )}
