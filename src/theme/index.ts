@@ -1,8 +1,8 @@
 import { DefaultTheme } from '@react-navigation/native';
 
 import { colors } from './colors';
-import { components } from './components';
 import { Font as font } from './fonts';
+import { components } from './sc-components';
 
 export const Theme = {
     ...DefaultTheme,

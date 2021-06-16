@@ -1,73 +1,27 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
-import styled, { css, useTheme } from 'styled-components/native';
-
-import IconCheckboxCircleFill from '@icons/CheckboxCircleFill';
-import IconInformationFill from '@icons/InformationFill';
-
+import { Box } from '@components/Box';
 import { Icon } from '@components/Icon';
+import { Text } from '@components/Text';
+
+import { useVariant } from '@hooks/useVariant';
 
 import { BannerProps } from './Banner.decl';
+import { getIcon } from './utils';
 
-const Container = styled.View<{ color: string }>(
-    ({
-        theme: {
-            components: {
-                Alert: { h, width, padding, border },
-            },
-        },
-        color,
-    }) => css`
-        min-height: ${h}px;
-        width: ${width}%;
-        padding: ${padding}px;
-        justify-content: center;
-        background-color: ${color};
-        border-radius: ${border}px;
-    `
-);
-
-const Wrapper = styled.View`
-    flex-direction: row;
-    align-items: center;
-`;
-
-const IconView = styled.View`
-    margin-right: 11px;
-`;
-
-const Text = styled.Text<{
-    color: string;
-}>`
-    color: ${({ color }) => color};
-`;
-
-export function Banner({ message, type }: BannerProps) {
+export function Banner({ message, variant, ...rest }: BannerProps) {
     const {
-        colors: { greenLighter, redLighter, greenDarker, redDarker },
-    } = useTheme();
-    let icon;
-    let color = '';
-    let bgColor = '';
-
-    if (type === 'success') {
-        icon = IconCheckboxCircleFill;
-        color = greenDarker;
-        bgColor = greenLighter;
-    } else {
-        icon = IconInformationFill;
-        color = redDarker;
-        bgColor = redLighter;
-    }
+        style: { color, ...restStyle },
+        variantValue,
+    } = useVariant('Banner', variant);
+    const IconComponent = useMemo(() => getIcon(variantValue), [variantValue]);
 
     return (
-        <Container color={bgColor}>
-            <Wrapper>
-                <IconView>
-                    <Icon icon={icon} size={18} fill={color} />
-                </IconView>
-                <Text color={color}>{message}</Text>
-            </Wrapper>
-        </Container>
+        <Box {...rest} alignItems="center" flexDirection="row" {...restStyle}>
+            <Box mr="xs" flexShrink={0}>
+                <Icon icon={IconComponent} size={18} fill={color} />
+            </Box>
+            <Text color={color}>{message}</Text>
+        </Box>
     );
 }

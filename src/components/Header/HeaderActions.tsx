@@ -1,18 +1,13 @@
 import React from 'react';
 
-import styled from 'styled-components/native';
+import { Box } from '@components/Box';
 
 import { HeaderActionsProps } from './Header.decl';
 
-const Wrapper = styled.View`
-    margin-left: auto;
-    flex-shrink: 1;
-    align-items: center;
-    border-radius: 10px;
-    overflow: hidden;
-    flex-direction: row;
-`;
-
 export function HeaderActions({ children }: HeaderActionsProps) {
-    return <Wrapper>{children}</Wrapper>;
+    return (
+        <Box style={{ marginLeft: 'auto' }} flexDirection="row" flexShrink={1} alignItems="center">
+            {children}
+        </Box>
+    );
 }

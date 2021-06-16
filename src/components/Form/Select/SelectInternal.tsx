@@ -1,15 +1,18 @@
 import React, { useCallback, useContext, useMemo, useRef } from 'react';
 
-import { Text } from 'react-native';
-
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { BottomSheetFlatListProps } from '@gorhom/bottom-sheet/lib/typescript/components/flatList/types';
 import { uniqueId } from 'lodash-es';
 
 import { BottomSheet } from '@components/BottomSheet';
+import { Box } from '@components/Box';
 import { Header } from '@components/Header';
+import { Text } from '@components/Text';
+
+import { Spacing } from '@theme/restyle/constants';
 
 import { useTranslation } from '@hooks/useTranslation';
+import { useVariant } from '@hooks/useVariant';
 
 import { FormContext } from '../Form.context';
 import { getIssue } from '../utils';
@@ -44,6 +47,10 @@ export function SelectInternal<T>({
 
     const error = useMemo(() => getIssue(issues, name, te), [issues, name, te]);
 
+    const {
+        style: { placeholder: placeholderStyle },
+    } = useVariant('Select', error ? 'error' : 'defaults');
+
     const renderOption: BottomSheetFlatListProps<T>['renderItem'] = useCallback(
         ({ item }) => {
             const isSelected = selected && selected[valueKey] === item[valueKey];
@@ -68,12 +75,18 @@ export function SelectInternal<T>({
     return (
         <>
             <SelectButton error={error} label={label} required={required} sheetId={sheetId.current}>
-                {selected ? labelRenderer(selected) : <Text>{placeholder}</Text>}
+                {selected ? (
+                    <Text>{labelRenderer(selected)}</Text>
+                ) : (
+                    <Text {...placeholderStyle}>{placeholder}</Text>
+                )}
             </SelectButton>
             <BottomSheet id={sheetId.current}>
-                <Header>
-                    <Header.Title>{label}</Header.Title>
-                </Header>
+                <Box px={Spacing.LARGE} my={Spacing.MEDIUM}>
+                    <Header>
+                        <Header.Title>{label}</Header.Title>
+                    </Header>
+                </Box>
                 <BottomSheetFlatList<T>
                     data={options}
                     renderItem={renderOption}

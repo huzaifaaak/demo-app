@@ -1,48 +1,36 @@
 import React from 'react';
 
-import styled, { css, useTheme } from 'styled-components/native';
+import { useRestyle } from '@shopify/restyle';
+
+import { TouchableBox } from '@components/Box';
+import { Text } from '@components/Text';
+
+import { RestyleFunctions } from '@theme/restyle/functions';
+
+import { useVariant } from '@hooks/useVariant';
 
 import { ButtonProps } from './Button.decl';
 
-const Container = styled.TouchableOpacity<{ disabled?: boolean }>(
-    ({
-        disabled,
-        theme: {
-            components: { Button },
-            colors,
-        },
-    }) => css`
-        height: ${Button.h}px;
-        width: 100%;
-        align-items: center;
-        justify-content: center;
-        background-color: ${disabled ? colors.blackLighter : colors.primary};
-        border-radius: 5px;
-    `
-);
-
-const Title = styled.Text`
-    /* color: ${({ theme: { colors } }) => colors.white}; */
-    font-size: 13px;
-    font-weight: 600;
-    /* font-family: ${({ theme: { font } }) => font.SEMI_BOLD}; */
-    line-height: 19px;
-`;
-
-export function Button({ disabled, onPress, testID, children }: ButtonProps) {
+export function Button({ variant, disabled, onPress, testID, children, ...rest }: ButtonProps) {
     const {
-        components: {
-            Pressable: { activeOpacity },
-        },
-    } = useTheme();
+        style: { fontSize, lineHeight, color, ...restStyles },
+    } = useVariant('Button', disabled ? 'disabled' : variant);
+    const containerProps = useRestyle(RestyleFunctions, {
+        ...rest,
+        ...restStyles,
+    });
+    const textProps = useRestyle(RestyleFunctions, { fontSize, lineHeight, color });
 
     return (
-        <Container
+        <TouchableBox
             testID={testID}
             disabled={disabled}
             onPress={onPress}
-            activeOpacity={activeOpacity}>
-            <Title>{children}</Title>
-        </Container>
+            {...containerProps}
+            alignItems="center"
+            flexDirection="row"
+            activeOpacity={0.75}>
+            <Text {...textProps}>{children}</Text>
+        </TouchableBox>
     );
 }

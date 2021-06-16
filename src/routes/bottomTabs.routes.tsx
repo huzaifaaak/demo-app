@@ -13,26 +13,33 @@ import IconStore2Line from '@icons/Store2Line';
 import IconUser3Fill from '@icons/User3Fill';
 import IconUser3Line from '@icons/User3Line';
 
-import { Icon, IconProps } from '@components/Icon';
+import { Icon, WrappedIconProps } from '@components/Icon';
 
 import { Routes } from '@constants/routes';
 
-import { Checkout } from '@screens/Checkout/';
-import { Product } from '@screens/Product/';
+import { Checkout } from '@screens/Checkout';
+import { Product } from '@screens/Product';
+
+import { Color } from '@theme/colors';
 
 const Tab = createBottomTabNavigator();
 
-const iconRenderer = (Filled: IconProps['icon'], Unfilled: IconProps['icon']) => ({
+const iconRenderer = (Filled: WrappedIconProps['icon'], Unfilled: WrappedIconProps['icon']) => ({
     focused,
     color,
 }: {
     focused: boolean;
     color: string;
-}) => <Icon icon={focused ? Filled : Unfilled} fill={color} />;
+}) => (
+    <Icon
+        icon={focused ? Filled : Unfilled}
+        fill={color as typeof Color.greyDark | typeof Color.primary}
+    />
+);
 
 export function BottomTabs() {
     const { CHECKOUT, PRODUCTS, SETTINGS, TRANSACTIONS } = Routes.App;
-    const { blackDarker, greyDark, primary } = Theme.colors;
+    const { blackDarker } = Theme.colors;
 
     return (
         <Tab.Navigator
@@ -41,8 +48,8 @@ export function BottomTabs() {
                 style: {
                     backgroundColor: blackDarker,
                 },
-                inactiveTintColor: greyDark,
-                activeTintColor: primary,
+                inactiveTintColor: Color.greyDark,
+                activeTintColor: Color.primary,
             }}>
             <Tab.Screen
                 name={CHECKOUT}

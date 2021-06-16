@@ -1,7 +1,5 @@
 import React, { useCallback } from 'react';
 
-import { View } from 'react-native';
-
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
 
 import { IAuth, IUser, IVendor } from '@bridghq/types';
@@ -17,7 +15,7 @@ import { Form } from '@components/Form';
 import { TextInput } from '@components/Form/TextInput';
 import { Header } from '@components/Header';
 import { Spacer } from '@components/Spacer';
-import { TextView } from '@components/TextView';
+import { Text } from '@components/Text';
 
 import { Routes } from '@constants/routes';
 
@@ -118,7 +116,7 @@ export function Login() {
                     </Header>
                     <Form.Error />
                     {params?.hasForgottenPassword && (
-                        <Banner type="success" message={tc('login.hasForgottenPassword')} />
+                        <Banner variant="success" message={tc('login.hasForgottenPassword')} />
                     )}
                     <TextInput
                         name="email"
@@ -131,16 +129,17 @@ export function Login() {
                             ? tc('login.fields.submit.loading')
                             : tc('login.fields.submit.default')}
                     </Form.Submit>
-                    <TextView link onPress={goToForgotPassword}>
+                    <Text variant="link" textAlign="center" onPress={goToForgotPassword}>
                         {tc('login.forgotPassword')}
-                    </TextView>
+                    </Text>
                     <Divider />
-                    <View>
-                        <TextView>{tc('login.footer.lead')}</TextView>
-                        <TextView mt={5} link onPress={goToSignup}>
+                    <Text textAlign="center">
+                        {tc('login.footer.lead')}
+                        {'\n'}
+                        <Text variant="link" mt="s" onPress={goToSignup}>
                             {tc('login.footer.cta')}
-                        </TextView>
-                    </View>
+                        </Text>
+                    </Text>
                 </Spacer>
             </Container>
         </Form.Wrapper>

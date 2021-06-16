@@ -1,8 +1,8 @@
 import 'styled-components/native';
 
 import { colors } from './colors';
-import { components } from './components';
 import { Font } from './fonts';
+import { components } from './sc-components';
 
 declare module 'styled-components/native' {
     export interface DefaultTheme {

@@ -4,44 +4,13 @@ import { StyleSheet } from 'react-native';
 
 import Sheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { Portal, PortalHost } from '@gorhom/portal';
-import styled, { css } from 'styled-components/native';
+
+import { Box } from '@components/Box';
 
 import { BottomSheetProps } from './BottomSheet.decl';
+import { BottomSheetBackground } from './BottomSheetBackground';
+import { BottomSheetHandle } from './BottomSheetHandle';
 import { BottomSheetContext } from './context/BottomSheetContext';
-
-const Container = styled.View`
-    flex: 1;
-`;
-
-const BottomSheetBackground = styled.View(
-    ({
-        theme: {
-            colors: { blackDark },
-            components: {
-                BottomSheet: { border },
-            },
-        },
-    }) => css`
-        background-color: ${blackDark};
-
-        border-top-right-radius: ${border}px;
-        border-top-left-radius: ${border}px;
-    `
-);
-
-const BottomSheetHandle = styled.View`
-    height: 7px;
-    width: 50px;
-    background-color: ${({
-        theme: {
-            colors: { greyDarker },
-        },
-    }) => greyDarker};
-    align-self: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border-radius: 999px;
-`;
 
 export function BottomSheet({ id, children, maxSnap = '80%' }: BottomSheetProps) {
     const { createSheetRef } = useContext(BottomSheetContext);
@@ -50,16 +19,16 @@ export function BottomSheet({ id, children, maxSnap = '80%' }: BottomSheetProps)
     return (
         <>
             <Portal>
-                <Container style={StyleSheet.absoluteFill}>
+                <Box style={StyleSheet.absoluteFill}>
                     <Sheet
                         ref={createSheetRef(id)}
                         snapPoints={snapPoints}
-                        backdropComponent={BottomSheetBackdrop as React.FC<any>}
-                        backgroundComponent={BottomSheetBackground as React.FC<any>}
-                        handleComponent={BottomSheetHandle as React.FC<any>}>
+                        backdropComponent={BottomSheetBackdrop}
+                        backgroundComponent={BottomSheetBackground}
+                        handleComponent={BottomSheetHandle}>
                         {children}
                     </Sheet>
-                </Container>
+                </Box>
             </Portal>
             <PortalHost name="BOTTOM_SHEET_HOST" />
         </>

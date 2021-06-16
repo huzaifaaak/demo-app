@@ -2,75 +2,54 @@ import React, { useContext } from 'react';
 
 import { Controller } from 'react-hook-form';
 
-import styled, { css, useTheme } from 'styled-components/native';
+import { useTheme } from '@shopify/restyle';
 
 import IconRefreshLine from '@icons/RefreshLine';
 
+import { Box, TouchableBox } from '@components/Box';
 import { Icon } from '@components/Icon';
+
+import { Theme } from '@theme/restyle';
 
 import { randomPastel } from '../../utils';
 import { FormContext } from '../Form.context';
 
 import { ColorRandomizerProps } from './ColorRandomizer.decl';
 
-const ColorBlock = styled.View<{ color?: string }>(
-    ({
-        color,
-        theme: {
-            colors: { primary },
-            components: { ColorRandomizer },
-        },
-    }) => css`
-        position: relative;
-        height: ${ColorRandomizer.h}px;
-        background-color: ${color || primary};
-        overflow: hidden;
-        border-radius: ${ColorRandomizer.borderRadius}px;
-    `
-);
-
-const RandomizerButton = styled.TouchableOpacity(
-    ({
-        theme: {
-            colors,
-            components: { ColorRandomizer },
-        },
-    }) => css`
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        align-items: center;
-        justify-content: center;
-        width: 46px;
-        height: 46px;
-        background: ${colors.blackLighter};
-        border-top-left-radius: ${ColorRandomizer.borderRadius}px;
-        border-bottom-right-radius: ${ColorRandomizer.borderRadius}px;
-    `
-);
-
 export function ColorRandomizer({ name }: ColorRandomizerProps) {
     const { control } = useContext(FormContext);
+
     const {
-        components: {
-            Pressable: { activeOpacity },
+        colors,
+        activeOpacity,
+        ColorRandomizer: {
+            defaults: { backgroundColor, button, ...blockStyle },
         },
-    } = useTheme();
+    } = useTheme<Theme>();
 
     return (
         <Controller
             name={name}
             control={control!}
             render={({ field: { value, onChange } }) => (
-                <ColorBlock color={value}>
-                    <RandomizerButton
+                <Box
+                    {...blockStyle}
+                    overflow="hidden"
+                    style={{ backgroundColor: value || colors[backgroundColor] }}>
+                    <TouchableBox
+                        {...button}
+                        position="absolute"
+                        bottom={0}
+                        right={0}
+                        alignItems="center"
+                        justifyContent="center"
                         activeOpacity={activeOpacity}
                         onPress={() => {
                             onChange(randomPastel());
                         }}>
-                        <Icon size={28} icon={IconRefreshLine} />
-                    </RandomizerButton>
-                </ColorBlock>
+                        <Icon size={28} icon={IconRefreshLine} pressable />
+                    </TouchableBox>
+                </Box>
             )}
         />
     );

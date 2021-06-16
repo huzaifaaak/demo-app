@@ -16,7 +16,7 @@ import { Form } from '@components/Form';
 import { TextInput } from '@components/Form/TextInput';
 import { Header } from '@components/Header';
 import { Spacer } from '@components/Spacer';
-import { TextView } from '@components/TextView';
+import { Text } from '@components/Text';
 
 import { Routes } from '@constants/routes';
 
@@ -118,7 +118,9 @@ export function SignUp() {
                     <Header>
                         <Header.Title>{tc('signup.header')}</Header.Title>
                     </Header>
+
                     <Form.Error />
+
                     <Spacer horizontal>
                         <TextInput name="firstName" label="First name" />
                         <TextInput name="lastName" label="Last name" />
@@ -127,28 +129,29 @@ export function SignUp() {
                     <TextInput name="email" label="Email" keyboardType={'email-address'} />
                     <TextInput name="password" label="Password" secure />
 
-                    <TextView>
+                    <Text textAlign="center">
                         <Trans i18nKey="signup.terms">
                             By signing up, you agree to our
                             {'\n'}
-                            <TextView link>terms & conditions</TextView> and
-                            <TextView link>privacy policy</TextView>
+                            <Text variant="link">terms & conditions</Text> and
+                            <Text variant="link">privacy policy</Text>
                         </Trans>
-                    </TextView>
+                    </Text>
 
                     <Form.Submit disabled={loading}>
                         {loading ? 'Loading...' : 'Signup'}
                     </Form.Submit>
+
                     <Divider />
 
-                    <TextView>
+                    <Text textAlign="center">
                         <Trans i18nKey="signup.footer">
                             Already have an account?{'\n'}
-                            <TextView link mt={5} onPress={goToLogin}>
+                            <Text variant="link" mt="s" onPress={goToLogin}>
                                 Login now
-                            </TextView>
+                            </Text>
                         </Trans>
-                    </TextView>
+                    </Text>
                 </Spacer>
             </Container>
         </Form.Wrapper>

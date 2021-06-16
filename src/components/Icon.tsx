@@ -1,17 +1,47 @@
-import React, { ComponentType } from 'react';
+import React, { ComponentType, useMemo } from 'react';
 
-import { useTheme } from 'styled-components/native';
+import { TouchableOpacityProps } from 'react-native';
 
-export interface WrappedIconProps {
+import { BoxProps, useTheme, VariantProps } from '@shopify/restyle';
+
+import { Color } from '@theme/colors';
+import { Theme } from '@theme/restyle';
+
+import { useVariant } from '@hooks/useVariant';
+
+import { Box, TouchableBox } from './Box';
+
+interface BaseIconProps extends BoxProps<Theme, true>, VariantProps<Theme, 'Icon'> {
     icon: ComponentType<IconProps>;
     size?: number;
-    fill?: string;
+    fill?: keyof Theme['colors'];
+}
+interface PressableIcon extends TouchableOpacityProps {
+    pressable: true;
 }
 
-export function Icon({ icon: WrappedIcon, size = 24, fill }: WrappedIconProps) {
-    const {
-        colors: { white },
-    } = useTheme();
+interface BoxIcon {
+    pressable?: false;
+}
 
-    return <WrappedIcon width={size} height={size} fill={fill || white} />;
+export type WrappedIconProps = BaseIconProps & (PressableIcon | BoxIcon);
+
+export function Icon({
+    icon: WrappedIcon,
+    size = 24,
+    fill,
+    variant,
+    pressable,
+    ...boxProps
+}: WrappedIconProps) {
+    const Wrapper = useMemo(() => (pressable ? TouchableBox : Box), [pressable]);
+    const { style } = useVariant('Icon', variant);
+    const { activeOpacity, colors } = useTheme<Theme>();
+    const fillValue = colors[fill || Color.white];
+
+    return (
+        <Wrapper {...style} {...boxProps} activeOpacity={activeOpacity}>
+            <WrappedIcon width={size} height={size} fill={fillValue} />
+        </Wrapper>
+    );
 }

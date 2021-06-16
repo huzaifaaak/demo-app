@@ -7,6 +7,7 @@ export interface TextInputProps {
     label: string;
     required?: boolean;
     secure?: boolean;
+    placeholder?: string;
     keyboardType?: KeyboardTypeOptions;
     alignRight?: boolean;
     prefix?: string | ComponentType<IconProps>;

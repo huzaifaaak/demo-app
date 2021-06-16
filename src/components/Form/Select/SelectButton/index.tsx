@@ -1,46 +1,18 @@
 import React from 'react';
 
-import styled, { css, useTheme } from 'styled-components/native';
-
 import IconArrowRightSLine from '@icons/ArrowRightSLine';
 
 import { useBottomSheet } from '@components/BottomSheet';
-import { ErrorText } from '@components/ErrorText';
-import { Label, RedText } from '@components/Form/TextInput';
+import { Box, TouchableBox } from '@components/Box';
 import { Icon } from '@components/Icon';
+import { Text } from '@components/Text';
+
+import { Color } from '@theme/colors';
+import { Spacing } from '@theme/restyle/constants';
+
+import { useVariant } from '@hooks/useVariant';
 
 import { SelectButtonProps } from './SelectButton.decl';
-
-const Container = styled.View``;
-
-const Wrapper = styled.View`
-    flex-direction: row;
-`;
-
-const SelectButtonWrapper = styled.Pressable<{ error?: string }>(
-    ({
-        theme: {
-            components: {
-                Pressable: { height, paddingHorizontal, paddingVertical, width },
-            },
-            colors: { blackLighter, red },
-        },
-        error,
-    }) => css`
-        height: ${height}px;
-        width: ${width}%;
-        padding: ${paddingVertical}px ${paddingHorizontal}px;
-        justify-content: space-between;
-        background-color: ${blackLighter};
-        border-radius: 5px;
-        flex-direction: row;
-        border-width: 1px;
-        border-color: ${error ? red : blackLighter};
-        align-items: center;
-    `
-);
-
-const LeftView = styled.View``;
 
 export function SelectButton({
     sheetId,
@@ -50,10 +22,10 @@ export function SelectButton({
     error,
     onPress,
 }: SelectButtonProps) {
-    const { expand } = useBottomSheet(sheetId);
     const {
-        colors: { greyDark },
-    } = useTheme();
+        style: { required: requiredStyle, option, placeholder, label: labelStyle, ...selectStyle },
+    } = useVariant('Select', error ? 'error' : 'defaults');
+    const { expand } = useBottomSheet(sheetId);
 
     const handlePress = () => {
         expand();
@@ -61,16 +33,23 @@ export function SelectButton({
     };
 
     return (
-        <Container>
-            <Wrapper>
-                <Label>{label}</Label>
-                {required && <RedText required>*</RedText>}
-            </Wrapper>
-            <SelectButtonWrapper error={error} onPress={handlePress}>
-                <LeftView>{children}</LeftView>
-                <Icon icon={IconArrowRightSLine} fill={greyDark} />
-            </SelectButtonWrapper>
-            {error && <ErrorText>{error}</ErrorText>}
-        </Container>
+        <Box>
+            <Text {...labelStyle}>
+                {label} {required && <Text {...requiredStyle}>*</Text>}
+            </Text>
+            <TouchableBox
+                onPress={handlePress}
+                alignItems="center"
+                flexDirection="row"
+                {...selectStyle}>
+                <Box alignItems="center">{children}</Box>
+                <Icon
+                    icon={IconArrowRightSLine}
+                    fill={Color.greyDarker}
+                    style={{ marginLeft: 'auto' }}
+                />
+            </TouchableBox>
+            {error && <Text mt={Spacing.XSMALL}>{error}</Text>}
+        </Box>
     );
 }

@@ -2,121 +2,21 @@ import React, { useCallback, useContext, useMemo } from 'react';
 
 import { Controller } from 'react-hook-form';
 
-import styled, { css, useTheme } from 'styled-components/native';
-
+import { Box } from '@components/Box';
 import { Icon } from '@components/Icon';
+import { Text } from '@components/Text';
+import { TextInput as Input } from '@components/TextInput';
+
+import { colors } from '@theme/colors';
+import { Spacing } from '@theme/restyle/constants';
 
 import { useTranslation } from '@hooks/useTranslation';
+import { useVariant } from '@hooks/useVariant';
 
 import { FormContext } from '../Form.context';
 import { getIssue } from '../utils';
 
 import { TextInputProps } from './TextInput.decl';
-
-const Container = styled.View`
-    flex: 1;
-`;
-
-const Wrapper = styled.View`
-    flex-direction: row;
-`;
-
-export const Label = styled.Text(
-    ({
-        theme: {
-            font,
-            colors,
-            components: { Text },
-        },
-    }) => css`
-        margin-right: 5px;
-        font-family: ${font.SEMI_BOLD};
-        font-size: ${Text.fontSize}px;
-        line-height: ${Text.lineHeight}px;
-        color: ${colors.greyDark};
-        margin-bottom: 5px;
-    `
-);
-
-export const RedText = styled(Label)<{
-    required?: boolean;
-}>(
-    ({ theme: { colors, font }, required }) => css`
-        margin: ${required ? 0 : 5}px 0 0 0;
-        color: ${colors.red};
-        font-family: ${font.REGULAR};
-    `
-);
-
-export const InputWrapper = styled.View<{
-    error?: string;
-}>(
-    ({
-        error,
-        theme: {
-            components: { TextInput },
-        },
-    }) => css`
-        flex-direction: row;
-        align-items: center;
-        padding: ${TextInput.py}px ${TextInput.px}px;
-        border-width: 1px;
-        background-color: ${TextInput.bg};
-        height: ${TextInput.h}px;
-        border-radius: ${TextInput.borderRadius}px;
-        border-color: ${error ? TextInput.errorColor : TextInput.borderColor};
-    `
-);
-
-const Input = styled.TextInput<{ alignRight?: boolean }>(
-    ({
-        alignRight,
-        theme: {
-            components: { TextInput },
-        },
-    }) => css`
-        width: 100%;
-        flex-shrink: 1;
-        padding: 0;
-        border-width: 0;
-        background-color: transparent;
-        color: ${TextInput.color};
-        text-align: ${alignRight ? 'right' : 'left'};
-    `
-);
-
-const IconContainer = styled.View<{ alignRight?: boolean }>(
-    ({
-        alignRight,
-        theme: {
-            components: {
-                TextInput: { icon },
-            },
-        },
-    }) => {
-        const margin = alignRight ? 'margin-left' : 'margin-right';
-
-        return css`
-            ${margin}: ${icon.spacing}px;
-        `;
-    }
-);
-
-const TextIcon = styled.Text(
-    ({
-        theme: {
-            components: {
-                TextInput: { icon },
-            },
-        },
-    }) => css`
-        flex-shrink: 0;
-        font-size: ${icon.size}px;
-        font-weight: ${icon.weight};
-        line-height: ${icon.size + 5}px;
-        color: ${icon.color};
-    `
-);
 
 export function TextInput({
     name,
@@ -125,58 +25,79 @@ export function TextInput({
     secure,
     keyboardType,
     prefix,
+    placeholder,
     alignRight,
 }: TextInputProps) {
     const { control, issues } = useContext(FormContext) || {};
-    const {
-        components: {
-            TextInput: { icon: TextInputIcon },
-        },
-    } = useTheme();
     const { te } = useTranslation();
     const error = useMemo(() => getIssue(issues, name, te), [issues, name, te]);
+    const {
+        style: {
+            label: labelStyle,
+            icon,
+            subtext,
+            required: requiredStyle,
+            input: { placeholderTextColor, ...inputStyle },
+            ...wrapperProps
+        },
+    } = useVariant('TextInput', error ? 'error' : 'defaults');
+    const marginProps = useMemo(
+        () => ({ [alignRight ? 'marginLeft' : 'marginRight']: icon.spacing }),
+        [alignRight, icon.spacing]
+    );
     const shouldRenderIcon = !!prefix;
+
     const renderIcon = useCallback(() => {
         if (prefix) {
             if (typeof prefix === 'string') {
                 return (
-                    <IconContainer alignRight={alignRight}>
-                        <TextIcon>{prefix}</TextIcon>
-                    </IconContainer>
+                    <Box {...marginProps}>
+                        <Text color={icon.color} fontSize={icon.size} fontWeight="bold">
+                            {prefix}
+                        </Text>
+                    </Box>
                 );
             }
 
             return (
-                <IconContainer alignRight={alignRight}>
-                    <Icon icon={prefix} size={TextInputIcon.size} fill={TextInputIcon.color} />
-                </IconContainer>
+                <Box {...marginProps}>
+                    <Icon icon={prefix} size={icon.size} fill={icon.color} />
+                </Box>
             );
         }
-    }, [prefix, TextInputIcon.size, TextInputIcon.color, alignRight]);
+    }, [prefix, marginProps, icon]);
 
     return (
         <Controller
             name={name}
             control={control!}
             render={({ field: { value, onChange } }) => (
-                <Container>
-                    <Wrapper>
-                        <Label>{label}</Label>
-                        {required && <RedText required>*</RedText>}
-                    </Wrapper>
-                    <InputWrapper error={error}>
+                <>
+                    <Text {...labelStyle}>
+                        {label} {required && <Text {...requiredStyle}>*</Text>}
+                    </Text>
+                    <Box {...wrapperProps} flexDirection="row" alignItems="center">
                         {!alignRight && shouldRenderIcon && renderIcon()}
                         <Input
-                            alignRight={alignRight}
+                            {...inputStyle}
+                            placeholderTextColor={colors[placeholderTextColor]}
+                            placeholder={placeholder}
+                            width="100%"
+                            px={Spacing.NONE}
+                            textAlign={alignRight ? 'right' : 'left'}
                             onChangeText={onChange}
                             secureTextEntry={secure}
                             keyboardType={keyboardType}
                             value={value}
                         />
                         {alignRight && shouldRenderIcon && renderIcon()}
-                    </InputWrapper>
-                    {!!error && <RedText>{error}</RedText>}
-                </Container>
+                    </Box>
+                    {!!error && (
+                        <Text color={subtext.color} marginTop={Spacing.XSMALL}>
+                            {error}
+                        </Text>
+                    )}
+                </>
             )}
         />
     );

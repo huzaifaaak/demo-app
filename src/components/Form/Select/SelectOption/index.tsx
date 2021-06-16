@@ -1,22 +1,17 @@
 import React from 'react';
 
-import styled from 'styled-components/native';
-
 import IconCheckFill from '@icons/CheckFill';
 
 import { useBottomSheet } from '@components/BottomSheet';
+import { TouchableBox } from '@components/Box';
 import { Icon } from '@components/Icon';
+import { Text } from '@components/Text';
+
+import { Color } from '@theme/colors';
+
+import { useVariant } from '@hooks/useVariant';
 
 import { SelectOptionProps } from './SelectOption.decl';
-
-const Container = styled.TouchableOpacity`
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 10px 20px;
-    align-items: center;
-`;
-
-const Text = styled.Text``;
 
 export function SelectOption<T = Record<string, any>>({
     sheetId,
@@ -26,6 +21,9 @@ export function SelectOption<T = Record<string, any>>({
     labelKey,
     optionRenderer,
 }: SelectOptionProps<T>) {
+    const {
+        style: { option },
+    } = useVariant('Select');
     const { close, collapse } = useBottomSheet(sheetId);
 
     const onItemPress = () => {
@@ -35,9 +33,11 @@ export function SelectOption<T = Record<string, any>>({
     };
 
     return (
-        <Container onPress={onItemPress}>
+        <TouchableBox onPress={onItemPress} {...option} flexDirection="row" alignItems="center">
             {optionRenderer ? optionRenderer(item) : <Text>{item[labelKey]}</Text>}
-            {isSelected && <Icon icon={IconCheckFill} />}
-        </Container>
+            {isSelected && (
+                <Icon icon={IconCheckFill} style={{ marginLeft: 'auto' }} fill={Color.green} />
+            )}
+        </TouchableBox>
     );
 }

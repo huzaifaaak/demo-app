@@ -1,6 +1,9 @@
-export type TypeOptions = 'success' | 'error';
+import { SpacingProps, SpacingShorthandProps, VariantProps } from '@shopify/restyle';
 
-export interface BannerProps {
-    message: string;
-    type: TypeOptions;
-}
+import { Theme } from '@theme/restyle';
+
+export type BannerProps = VariantProps<Theme, 'Banner'> &
+    SpacingProps<Theme> &
+    SpacingShorthandProps<Theme> & {
+        message: string;
+    };

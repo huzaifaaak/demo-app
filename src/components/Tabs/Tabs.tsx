@@ -3,20 +3,23 @@ import React, { useCallback, useContext } from 'react';
 import { useWindowDimensions } from 'react-native';
 import { SceneRendererProps, TabBar, TabView } from 'react-native-tab-view';
 
-import { useTheme } from 'styled-components';
+import { useTheme } from '@shopify/restyle';
+
+import { TouchableBox } from '@components/Box';
+import { Text } from '@components/Text';
+
+import { Theme } from '@theme/restyle';
 
 import { TabsProps, TabBarState } from './Tabs.decl';
-import { TabBarItem, TabLabel } from './Tabs.styled';
 import { TabContext } from './context/TabContext';
 
 export function Tabs({ children }: TabsProps) {
     const { index, routes, scenes, setIndex } = useContext(TabContext);
     const {
-        components: {
-            Pressable: { activeOpacity },
-        },
+        activeOpacity,
         colors: { primary, transparent },
-    } = useTheme();
+    } = useTheme<Theme>();
+
     const width = useWindowDimensions().width;
     const RenderScene = useCallback(
         ({ route }) => {
@@ -38,15 +41,17 @@ export function Tabs({ children }: TabsProps) {
                     renderTabBarItem={({ key, route }) => {
                         const isTabActive = key === activeKey;
                         return (
-                            <TabBarItem
+                            <TouchableBox
+                                height={40}
+                                width={layout?.width / routes?.length}
+                                backgroundColor={isTabActive ? 'primary' : 'transparent'}
                                 activeOpacity={activeOpacity}
+                                alignItems="center"
+                                justifyContent="center"
                                 key={key}
-                                onPress={() => jumpTo(key)}
-                                isTabActive={isTabActive}
-                                routesLength={routes?.length}
-                                width={layout?.width}>
-                                <TabLabel isTabActive={isTabActive}>{route?.title}</TabLabel>
-                            </TabBarItem>
+                                onPress={() => jumpTo(key)}>
+                                <Text color={isTabActive ? 'white' : 'grey'}>{route?.title}</Text>
+                            </TouchableBox>
                         );
                     }}
                     style={{ backgroundColor: transparent }}

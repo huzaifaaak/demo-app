@@ -9,10 +9,10 @@ const exists = fs.existsSync(BASE_PATH);
 if (exists) {
     const files = fs.readdirSync(path.resolve(BASE_PATH, './src/icons'));
     const content = [
-        `declare interface IconProps {`,
+        `declare interface IconProps<Fill = string> {`,
         `    width?: number`,
         `    height?: number`,
-        `    fill?: string`,
+        `    fill?: Fill`,
         `}\n`,
     ];
 
