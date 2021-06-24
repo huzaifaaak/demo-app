@@ -19,8 +19,12 @@ export function useStorage(key: string) {
 
     const setStorageValue = useCallback(
         async (value) => {
-            storeValue(value);
-            await AsyncStorage.setItem(key, value);
+            try {
+                storeValue(value);
+                await AsyncStorage.setItem(key, value);
+            } catch (error) {
+                console.error(error);
+            }
         },
         [storeValue, key]
     );

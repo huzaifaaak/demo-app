@@ -30,6 +30,7 @@
         "react-hook-form": "7.1.1",
         "react-i18next": "11.8.13",
         "react-native": "0.64.0",
+        "react-native-flipper": "0.94.1",
         "react-native-gesture-handler": "1.10.3",
         "react-native-localize": "2.0.2",
         "react-native-pager-view": "5.1.10",
@@ -40,7 +41,9 @@
         "react-native-svg": "12.1.1-0",
         "react-native-tab-view": "3.0.1",
         "reanimated-bottom-sheet": "1.0.0-alpha.22",
+        "rn-async-storage-flipper": "0.0.10",
         "styled-components": "5.2.3",
+        "swr": "0.5.6",
         "use-async-effect": "2.2.3"
     },
     "devDependencies": {

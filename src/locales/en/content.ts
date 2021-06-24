@@ -63,4 +63,7 @@ export const Content = {
             },
         },
     },
+    product: {
+        empty: 'Uh-oh! Your shelf is empty. Go ahead, and add your first item!',
+    },
 };

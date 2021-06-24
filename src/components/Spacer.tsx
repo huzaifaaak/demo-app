@@ -8,6 +8,7 @@ export function Spacer({
     children,
     flex = 1,
     flexGrow = 0,
+    itemsFlex = 1,
     style,
 }: {
     space?: number;
@@ -16,6 +17,7 @@ export function Spacer({
     flex?: number;
     flexGrow?: number;
     style?: StyleProp<ViewStyle>;
+    itemsFlex?: number;
 }) {
     const childrenLength = Children.count(children);
 
@@ -44,7 +46,9 @@ export function Spacer({
                     (newChildType?.name !== 'FormError' ||
                         (newChildType?.name === 'FormError' && newChild?.props?.children))
                 ) {
-                    return <View style={{ [marginPos]: marginValue, flex: 1 }}>{child}</View>;
+                    return (
+                        <View style={{ [marginPos]: marginValue, flex: itemsFlex }}>{child}</View>
+                    );
                 }
 
                 return null;

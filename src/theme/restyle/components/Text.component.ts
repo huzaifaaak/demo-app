@@ -21,4 +21,7 @@ export const TextComponent = component('Text', {
     .variant('link', {
         color: Color.primaryLight,
     })
+    .variant('ghost', {
+        color: Color.greyDark,
+    })
     .seal();

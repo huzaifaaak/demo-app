@@ -13,7 +13,7 @@ import { Theme } from '@theme/restyle';
 import { TabsProps, TabBarState } from './Tabs.decl';
 import { TabContext } from './context/TabContext';
 
-export function Tabs({ children }: TabsProps) {
+export function Tabs({ children, style }: TabsProps) {
     const { index, routes, scenes, setIndex } = useContext(TabContext);
     const {
         activeOpacity,
@@ -54,13 +54,13 @@ export function Tabs({ children }: TabsProps) {
                             </TouchableBox>
                         );
                     }}
-                    style={{ backgroundColor: transparent }}
+                    style={[{ backgroundColor: transparent }, style]}
                     tabStyle={{ backgroundColor: primary }}
                     indicatorStyle={{ height: 0 }}
                 />
             );
         },
-        [activeOpacity, primary, transparent]
+        [activeOpacity, primary, transparent, style]
     );
 
     return (

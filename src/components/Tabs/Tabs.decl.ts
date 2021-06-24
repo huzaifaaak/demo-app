@@ -1,5 +1,6 @@
 import { Dispatch, MutableRefObject, ReactNode, SetStateAction } from 'react';
 
+import { ViewStyle } from 'react-native';
 import { NavigationState } from 'react-native-tab-view';
 
 export interface TabProps {
@@ -31,6 +32,7 @@ export interface ITabContext {
 
 export interface TabsProps {
     children: ReactNode;
+    style?: ViewStyle;
 }
 
 export type TabBarState = NavigationState<IRoute>;

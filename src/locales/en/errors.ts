@@ -32,4 +32,9 @@ export const Errors = {
             },
         },
     },
+    products: {
+        items: {
+            loading: 'There was an error loading your items. You can try again or request help.',
+        },
+    },
 };

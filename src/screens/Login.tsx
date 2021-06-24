@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
 
-import { IAuth, IUser, IVendor } from '@bridghq/types';
+import { IAuth, ICatalog, IUser, IVendor } from '@bridghq/types';
 import useAsyncEffect from 'use-async-effect';
 
 import { useGet, usePost } from '@fetch';
@@ -42,6 +42,12 @@ export function Login() {
         GET: getUser,
     } = useGet<IUser.GetReturn>();
     const {
+        loading: catalogLoading,
+        error: catalogError,
+        data: catalogData,
+        GET: getCatalog,
+    } = useGet<ICatalog.GetReturn>();
+    const {
         loading: vendorLoading,
         error: vendorError,
         data: vendorData,
@@ -49,7 +55,8 @@ export function Login() {
     } = useGet<IVendor.GetReturn>();
     const { setStorageValue: setToken } = useSerializedStorage<IAuth.LoginReturn>('token');
     const { setStorageValue: setVendorId } = useStorage('vendorId');
-    const { setUser, setVendor } = useMetaInfo();
+    const { setStorageValue: setCatalogData } = useSerializedStorage('catalog');
+    const { setUser, setVendor, setCatalog } = useMetaInfo();
     const { tc } = useTranslation();
 
     const onSubmit = useCallback(
@@ -83,29 +90,47 @@ export function Login() {
                     'Vendor-Id': vendorId,
                 },
             });
+            getCatalog('/catalogs/list', {
+                headers: {
+                    Authorization: `Bearer ${loginData.accessToken}`,
+                    'Vendor-Id': vendorId,
+                },
+            });
         }
     }, [userData]);
 
     useAsyncEffect(() => {
+        if (catalogData) {
+            setCatalogData(catalogData?.[0]);
+            setCatalog(catalogData);
+        }
+    }, [catalogData]);
+
+    useAsyncEffect(() => {
         if (vendorData) {
             setVendor(vendorData);
+        }
+    }, [vendorData]);
+
+    useAsyncEffect(() => {
+        if (vendorData && catalogData) {
             reset({
                 routes: [
                     {
-                        name: Routes.App.CHECKOUT,
+                        name: Routes.BottomTabBar,
                     },
                 ],
             });
         }
-    }, [vendorData]);
+    }, [vendorData, catalogData, reset]);
 
     const goToSignup = () => navigate(Routes.Base.REGISTER);
 
     const goToForgotPassword = () => navigate(Routes.Base.FORGOT);
 
-    const error = loginError || userError || vendorError;
+    const error = loginError || userError || vendorError || catalogError;
 
-    const loading = loginLoading || userLoading || vendorLoading;
+    const loading = loginLoading || userLoading || vendorLoading || catalogLoading;
 
     return (
         <Form.Wrapper error={error} onSubmit={onSubmit} issues={issues}>
