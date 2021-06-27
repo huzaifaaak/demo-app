@@ -23,6 +23,6 @@ export const baseTheme = {
     },
     breakpoints: {
         [Breakpoints.PHONE]: 0,
-        [Breakpoints.PHONE]: 768,
+        [Breakpoints.TABLET]: 768,
     },
 };

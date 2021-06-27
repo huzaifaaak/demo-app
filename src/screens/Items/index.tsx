@@ -1,27 +1,37 @@
 import React, { useCallback, useMemo } from 'react';
 
-import { FlatList } from 'react-native';
+import { useMetaInfo } from '@meta';
 
 import IconArrowRightLine from '@icons/ArrowRightLine';
 import IconErrorWarningFill from '@icons/ErrorWarningFill';
 
 import { EmptyItems } from '@assets/images/emptyItems';
 
-import { Box } from '@components/Box';
+import { FlatListBox, Box } from '@components/Box';
 import { Button } from '@components/Button';
 import { Icon } from '@components/Icon';
 import { Spacer } from '@components/Spacer';
 import { Text } from '@components/Text';
 
+import { CurrenciesList } from '@constants/currency';
+
 import { useSWR } from '@hooks/useSWR';
 import { useTranslation } from '@hooks/useTranslation';
 
-import { Item } from './components/item';
+import { ItemRow } from './components/ItemRow';
 
 export const Items = React.memo(function () {
     const { tc, te } = useTranslation();
 
     const { data: items, error: error, revalidate } = useSWR('/items/list', {});
+    const { vendor } = useMetaInfo();
+
+    const currencySymbol = useMemo(() => {
+        if (vendor?.currency) {
+            return CurrenciesList[vendor?.currency]?.symbol_native;
+        }
+        return '';
+    }, [vendor]);
 
     const ErrorLoading = () => (
         <Box>
@@ -56,17 +66,18 @@ export const Items = React.memo(function () {
         <Box flex={1} justifyContent={justification}>
             {error && <ErrorLoading />}
             {!error && (
-                <FlatList
+                <FlatListBox
                     data={items}
                     keyExtractor={(item, index) => index.toString()}
-                    contentContainerStyle={
+                    paddingTop="m"
+                    contentContainerStyle={[
                         isEmpty && {
                             flexGrow: 1,
                             justifyContent: 'center',
-                        }
-                    }
+                        },
+                    ]}
                     ListEmptyComponent={ListEmptyComponent}
-                    renderItem={() => <></>}
+                    renderItem={({ item }) => <ItemRow {...item} currency={currencySymbol} />}
                 />
             )}
         </Box>
