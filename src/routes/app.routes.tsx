@@ -5,12 +5,11 @@ import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/
 import { Routes } from '@constants/routes';
 
 import { BusinessInfo } from '@screens/BusinessInfo';
+import { Checkout } from '@screens/Checkout';
 import { ForgotPassword } from '@screens/Forgot';
 import { Login } from '@screens/Login';
 import { SignUp } from '@screens/Signup';
-
-import { Checkout } from '../screens/Checkout';
-import { Welcome } from '../screens/Welcome';
+import { Welcome } from '@screens/Welcome';
 
 import { BottomTabs } from './bottomTabs.routes';
 
