@@ -10,10 +10,12 @@ import { Container } from '@components/Container';
 import { Header } from '@components/Header';
 import { Icon } from '@components/Icon';
 import { Spacer } from '@components/Spacer';
-import { Tabs, TabProvider, Tab } from '@components/Tabs';
+import { Tabs, Tab } from '@components/Tabs';
 
 import { Checkout } from '@screens/Checkout';
 import { Items } from '@screens/Items';
+
+import { Spacing } from '@theme/restyle/constants';
 
 import { ActionButton, Label } from './Product.styled';
 
@@ -24,20 +26,18 @@ export function Product() {
 
     return (
         <>
-            <TabProvider>
-                <Box flex={1} style={{ padding: 20 }}>
-                    <Header>
-                        <Header.Title>Products</Header.Title>
-                        <Header.Actions>
-                            <Header.Action onPress={expand} icon={IconAddFill} />
-                        </Header.Actions>
-                    </Header>
-                    <Tabs style={{ marginTop: 20 }}>
-                        <Tab tabKey="Items" title="Items" scene={Items} />
-                        <Tab tabKey="Categories" title="Categories" scene={Checkout} />
-                    </Tabs>
-                </Box>
-            </TabProvider>
+            <Box flex={1} p={Spacing.MEDIUM}>
+                <Header>
+                    <Header.Title>Products</Header.Title>
+                    <Header.Actions>
+                        <Header.Action onPress={expand} icon={IconAddFill} />
+                    </Header.Actions>
+                </Header>
+                <Tabs style={{ marginTop: 20 }}>
+                    <Tab tabKey="Items" title="Items" scene={Items} />
+                    <Tab tabKey="Categories" title="Categories" scene={Checkout} />
+                </Tabs>
+            </Box>
             <BottomSheet maxSnap={'30%'} id={BOTTOM_SHEET_NAME}>
                 <Container>
                     <Spacer space={10}>

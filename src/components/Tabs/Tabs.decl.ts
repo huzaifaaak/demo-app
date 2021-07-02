@@ -1,4 +1,4 @@
-import { Dispatch, MutableRefObject, ReactNode, SetStateAction } from 'react';
+import { Dispatch, MutableRefObject, ReactElement, ReactNode, SetStateAction } from 'react';
 
 import { ViewStyle } from 'react-native';
 import { NavigationState } from 'react-native-tab-view';
@@ -13,13 +13,14 @@ export interface Tab {
     (props: TabProps): null;
 }
 
-export interface IScene {
-    [key: string]: ReactNode;
-}
+export type IScene = Record<string, ReactNode>;
 
 export interface IRoute {
     key: string;
     title: string;
+    index: number;
+    last: boolean;
+    length: number;
 }
 
 export interface ITabContext {
@@ -31,7 +32,7 @@ export interface ITabContext {
 }
 
 export interface TabsProps {
-    children: ReactNode;
+    children: ReactElement<TabProps>[];
     style?: ViewStyle;
 }
 

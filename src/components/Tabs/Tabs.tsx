@@ -1,67 +1,44 @@
-import React, { useCallback, useContext } from 'react';
+import React, { Children, useCallback, useRef, useState, useEffect } from 'react';
 
 import { useWindowDimensions } from 'react-native';
-import { SceneRendererProps, TabBar, TabView } from 'react-native-tab-view';
+import { TabView } from 'react-native-tab-view';
 
-import { useTheme } from '@shopify/restyle';
-
-import { TouchableBox } from '@components/Box';
-import { Text } from '@components/Text';
-
-import { Theme } from '@theme/restyle';
-
-import { TabsProps, TabBarState } from './Tabs.decl';
-import { TabContext } from './context/TabContext';
+import { TabBar } from './TabBar';
+import { TabsProps, IScene, IRoute } from './Tabs.decl';
 
 export function Tabs({ children, style }: TabsProps) {
-    const { index, routes, scenes, setIndex } = useContext(TabContext);
-    const {
-        activeOpacity,
-        colors: { primary, transparent },
-    } = useTheme<Theme>();
+    const [index, setIndex] = useState(0);
+    const [scenes, setScenes] = useState<IScene>({});
+    const routes = useRef<IRoute[]>([]);
+    const hasSetScene = useRef(false);
 
     const width = useWindowDimensions().width;
     const RenderScene = useCallback(
         ({ route }) => {
-            const Comp = scenes[route.key];
+            const Comp = scenes[route.key] as React.ComponentType;
             return <Comp />;
         },
         [scenes]
     );
 
-    const RenderTabBar = useCallback(
-        (tabBarProps: SceneRendererProps & { navigationState: TabBarState }) => {
-            const { navigationState, jumpTo, layout } = tabBarProps;
-            const { index, routes } = navigationState;
-            const activeKey = routes?.[index]?.key;
-
-            return (
-                <TabBar
-                    {...tabBarProps}
-                    renderTabBarItem={({ key, route }) => {
-                        const isTabActive = key === activeKey;
-                        return (
-                            <TouchableBox
-                                height={40}
-                                width={layout?.width / routes?.length}
-                                backgroundColor={isTabActive ? 'primary' : 'transparent'}
-                                activeOpacity={activeOpacity}
-                                alignItems="center"
-                                justifyContent="center"
-                                key={key}
-                                onPress={() => jumpTo(key)}>
-                                <Text color={isTabActive ? 'white' : 'grey'}>{route?.title}</Text>
-                            </TouchableBox>
-                        );
-                    }}
-                    style={[{ backgroundColor: transparent }, style]}
-                    tabStyle={{ backgroundColor: primary }}
-                    indicatorStyle={{ height: 0 }}
-                />
-            );
-        },
-        [activeOpacity, primary, transparent, style]
-    );
+    useEffect(() => {
+        if (!hasSetScene.current) {
+            hasSetScene.current = true;
+            const scenes: IScene = {};
+            const count = Children.count(children);
+            Children.forEach(children, ({ props: { tabKey, title, scene } }, childIndex) => {
+                routes.current.push({
+                    key: tabKey,
+                    title,
+                    index: childIndex,
+                    last: childIndex === count - 1,
+                    length: count,
+                });
+                scenes[tabKey] = scene;
+            });
+            setScenes(scenes);
+        }
+    }, [children]);
 
     return (
         <>
@@ -69,10 +46,10 @@ export function Tabs({ children, style }: TabsProps) {
                 navigationState={{ index, routes: routes.current }}
                 onIndexChange={setIndex}
                 renderScene={RenderScene}
+                renderTabBar={TabBar}
                 initialLayout={{ width }}
-                renderTabBar={RenderTabBar}
+                style={style}
             />
-            {children}
         </>
     );
 }
