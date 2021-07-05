@@ -1,14 +1,14 @@
 import React, { useCallback, useMemo } from 'react';
 
+import { useNavigation } from '@react-navigation/native';
+
 import { useMetaInfo } from '@meta';
 
 import IconArrowRightLine from '@icons/ArrowRightLine';
-import IconErrorWarningFill from '@icons/ErrorWarningFill';
 
 import { EmptyItems } from '@assets/images/emptyItems';
 
 import { FlatListBox, Box } from '@components/Box';
-import { Button } from '@components/Button';
 import { Icon } from '@components/Icon';
 import { Spacer } from '@components/Spacer';
 import { Text } from '@components/Text';
@@ -19,9 +19,12 @@ import { useSWR } from '@hooks/useSWR';
 import { useTranslation } from '@hooks/useTranslation';
 
 import { ItemRow } from './components/ItemRow';
+import { LoadingError } from './components/LoadingError';
 
 export const Items = React.memo(function () {
-    const { tc, te } = useTranslation();
+    const { tc } = useTranslation();
+
+    const { navigate } = useNavigation();
 
     const { data: items, error: error, revalidate } = useSWR('/items/list', {});
     const { vendor } = useMetaInfo();
@@ -33,18 +36,6 @@ export const Items = React.memo(function () {
         return '';
     }, [vendor]);
 
-    const ErrorLoading = () => (
-        <Box>
-            <Spacer space={10} flex={0} itemsFlex={0}>
-                <Icon alignSelf="center" size={40} fill="red" icon={IconErrorWarningFill} />
-                <Text color="red" textAlign="center">
-                    {te('products.items.loading')}
-                </Text>
-                <Button onPress={revalidate}>Try again</Button>
-                <Button variant="ghost">Contact Support</Button>
-            </Spacer>
-        </Box>
-    );
     const EmptyItem = () => (
         <Box alignItems="center">
             <Spacer flex={0} itemsFlex={0} style={{ alignItems: 'center' }}>
@@ -59,12 +50,14 @@ export const Items = React.memo(function () {
             </Spacer>
         </Box>
     );
+
     const isEmpty = useMemo(() => items?.length === 0, [items]);
     const justification = useMemo(() => (error ? 'center' : 'flex-start'), [error]);
     const ListEmptyComponent = useCallback(() => <EmptyItem />, []);
+
     return (
         <Box flex={1} justifyContent={justification}>
-            {error && <ErrorLoading />}
+            {error && <LoadingError revalidate={revalidate} />}
             {!error && (
                 <FlatListBox
                     data={items}
@@ -77,7 +70,9 @@ export const Items = React.memo(function () {
                         },
                     ]}
                     ListEmptyComponent={ListEmptyComponent}
-                    renderItem={({ item }) => <ItemRow {...item} currency={currencySymbol} />}
+                    renderItem={({ item }) => (
+                        <ItemRow item={item} navigate={navigate} currency={currencySymbol} />
+                    )}
                 />
             )}
         </Box>
