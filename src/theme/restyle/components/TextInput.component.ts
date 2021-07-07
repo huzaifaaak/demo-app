@@ -28,9 +28,9 @@ export const TextInputComponent = component('TextInput', {
     },
     icon: {
         spacing: Spacing.MEDIUM,
-        size: 24,
+        size: 20,
         color: Color.white,
-        lineHeight: 24,
+        lineHeight: 20,
     },
     subtext: {
         color: Color.red,

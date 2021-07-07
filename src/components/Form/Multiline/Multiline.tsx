@@ -47,7 +47,7 @@ export function Multiline({ name, label, placeholder, required = true }: Multili
             name={name}
             control={control!}
             render={({ field: { value, onChange } }) => (
-                <Box flex={1}>
+                <>
                     <Box flexDirection="row">
                         <Text {...labelText} marginRight="xs" marginBottom="xs">
                             {label}
@@ -73,7 +73,7 @@ export function Multiline({ name, label, placeholder, required = true }: Multili
                         multiline={true}
                     />
                     {!!error && <Text fontFamily={redText.fontFamily}>{error}</Text>}
-                </Box>
+                </>
             )}
         />
     );

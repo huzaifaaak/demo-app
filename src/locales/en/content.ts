@@ -65,5 +65,11 @@ export const Content = {
     },
     product: {
         empty: 'Uh-oh! Your shelf is empty. Go ahead, and add your first item!',
+        createItem: {
+            category:
+                'By default all items are created under “Uncategorized”. To change this, set a category as default.',
+            price:
+                'Add a single price for this item or create variations of this item, each with it’s price.',
+        },
     },
 };

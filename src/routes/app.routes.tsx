@@ -7,10 +7,10 @@ import { Routes } from '@constants/routes';
 import { BusinessInfo } from '@screens/BusinessInfo';
 import { Checkout } from '@screens/Checkout';
 import { ForgotPassword } from '@screens/Forgot';
+import { CreateItem } from '@screens/Items/CreateItem';
 import { ViewItem } from '@screens/Items/ViewItem';
 import { Login } from '@screens/Login';
 import { SignUp } from '@screens/Signup';
-
 import { Welcome } from '@screens/Welcome';
 
 import { BottomTabs } from './bottomTabs.routes';
@@ -33,6 +33,7 @@ export function BaseRoutes() {
             <Stack.Screen name={Routes.BottomTabBar} component={BottomTabs} />
             <Stack.Screen name={Routes.App.CHECKOUT} component={Checkout} />
             <Stack.Screen name={Routes.App.VIEWITEM} component={ViewItem} />
+            <Stack.Screen name={Routes.App.CREATEITEM} component={CreateItem} />
         </Stack.Navigator>
     );
 }

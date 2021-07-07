@@ -73,9 +73,11 @@ export function TextInput({
             control={control!}
             render={({ field: { value, onChange } }) => (
                 <>
-                    <Text {...labelStyle}>
-                        {label} {required && <Text {...requiredStyle}>*</Text>}
-                    </Text>
+                    {!!label && (
+                        <Text {...labelStyle}>
+                            {label} {required && <Text {...requiredStyle}>*</Text>}
+                        </Text>
+                    )}
                     <Box {...wrapperProps} flexDirection="row" alignItems="center">
                         {!alignRight && shouldRenderIcon && renderIcon()}
                         <Input
