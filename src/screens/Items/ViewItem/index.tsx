@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { StyleSheet } from 'react-native';
 import SkeletonContent from 'react-native-skeleton-content-nonexpo';
@@ -13,17 +13,29 @@ import { Header } from '@components/Header';
 import { Spacer } from '@components/Spacer';
 import { Text } from '@components/Text';
 
+import { Routes } from '@constants/routes';
+
 import { Color, colors } from '@theme/colors';
 import { Radius, Spacing } from '@theme/restyle/constants';
 
+import { useCurrency } from '@hooks/useCurrency';
 import { useSWR } from '@hooks/useSWR';
 
 import { LoadingError } from '../components/LoadingError';
 
-export function ViewItem({ route }: { route: any }) {
+export const ViewItem = React.memo(function ({ route }: { route: any }) {
     const { goBack } = useNavigation();
-    const { id, currency } = route.params;
+    const { currency } = useCurrency();
+
+    const { id } = route.params;
     const { data: item, error, revalidate } = useSWR(`/items/${id}`, {});
+
+    const { navigate } = useNavigation();
+
+    const goToEdit = useCallback(
+        () => navigate(Routes.App.CREATE_ITEM, { defaultValue: item, type: 'edit' }),
+        [navigate, item]
+    );
 
     if (!item && !error) {
         return (
@@ -49,10 +61,7 @@ export function ViewItem({ route }: { route: any }) {
                 <Box position="absolute" top={0} mt="xl" alignSelf="center">
                     <Header onBack={goBack}>
                         <Header.Title>View item</Header.Title>
-                        <Header.Actions>
-                            <Header.Action icon={IconDeleteBin6Line} />
-                            <Header.Action icon={IconPencilLine} />
-                        </Header.Actions>
+                        <Header.Actions />
                     </Header>
                 </Box>
                 <LoadingError revalidate={revalidate} />
@@ -68,7 +77,7 @@ export function ViewItem({ route }: { route: any }) {
                         <Header.Title>View item</Header.Title>
                         <Header.Actions>
                             <Header.Action icon={IconDeleteBin6Line} />
-                            <Header.Action icon={IconPencilLine} />
+                            <Header.Action icon={IconPencilLine} onPress={goToEdit} />
                         </Header.Actions>
                     </Header>
                     {!error && (
@@ -110,7 +119,7 @@ export function ViewItem({ route }: { route: any }) {
             </Box>
         </>
     );
-}
+});
 
 const styles = StyleSheet.create({
     line1: {

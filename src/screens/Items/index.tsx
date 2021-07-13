@@ -60,7 +60,7 @@ export const Items = React.memo(function () {
             {error && <LoadingError revalidate={revalidate} />}
             {!error && (
                 <FlatListBox
-                    data={items}
+                    data={items ? items : []}
                     keyExtractor={(item, index) => index.toString()}
                     paddingTop="m"
                     contentContainerStyle={[

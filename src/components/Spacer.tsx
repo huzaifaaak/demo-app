@@ -37,10 +37,6 @@ export function Spacer({
                 const newChild = child as React.ReactElement;
                 const newChildType = newChild?.type as any;
 
-                if (newChild && newChildType?.name === 'FormError') {
-                    console.log('FormError in spacer', newChild);
-                }
-
                 if (
                     newChild &&
                     (newChildType?.name !== 'FormError' ||

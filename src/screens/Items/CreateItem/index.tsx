@@ -22,6 +22,7 @@ import { Spacing } from '@theme/restyle/constants';
 import { useSerializedStorage } from '@utils/useStorage';
 
 import { useCurrency } from '@hooks/useCurrency';
+import { useItem } from '@hooks/useItem';
 import { useSWR } from '@hooks/useSWR';
 import { useTranslation } from '@hooks/useTranslation';
 
@@ -31,19 +32,26 @@ import {
 } from './components/selectCategory/';
 import { Category } from './createItem.decl';
 
-export function CreateItem() {
+export function CreateItem({ route }) {
     const { storedValue: catalogId } = useSerializedStorage<ICatalog.GetReturn>('catalog');
-
+    const { type, defaultValue } = route?.params;
     const { data: categoryData, error: categoryError }: { data?: Category[]; error?: any } = useSWR(
         '/categories/list',
         {}
     );
 
+    const HeaderTitle = useMemo(() => (type === 'create' ? 'Create' : 'Edit'), [type]);
+
+    const { goBack, navigate } = useNavigation();
+
+    const { initalValue, loading, submit, isLoading, error } = useItem(type, defaultValue, {
+        goBack,
+        navigate,
+    });
+
     const { symbol } = useCurrency();
 
-    const { POST, data: postResp, error: itemError, loading: itemLoading } = usePost();
     const { tc } = useTranslation();
-    const { goBack } = useNavigation();
 
     const spacerStyle = useMemo(
         () => ({
@@ -55,52 +63,22 @@ export function CreateItem() {
         []
     );
 
-    const submit = useCallback(
-        (data) => {
-            const obj = {
-                categoryId: data.category,
-                name: data.name,
-                description: data.description,
-                price: data.price && parseInt(data.price),
-                discount: 0,
-                picture: 'https://placekitten.com/200/300',
-            };
-
-            POST(`/catalogs/${catalogId?.id}/items/create`, {
-                body: obj,
-                headers: {
-                    catalogId: catalogId?.id,
-                },
-            });
-        },
-        [POST, catalogId?.id]
-    );
-
-    useEffect(() => {
-        if (postResp?.id) {
-            goBack();
-        }
-    }, [goBack, postResp]);
-
-    const error = itemError || categoryError;
+    if (loading) {
+        return null;
+    }
 
     return (
-        <Form.Wrapper
-            initialValue={{
-                category: 'dbc8abfe-8d32-420f-80e0-8e5274d34507',
-            }}
-            error={error}
-            onSubmit={submit}>
+        <Form.Wrapper initialValue={initalValue} error={error || categoryError} onSubmit={submit}>
             <Box padding={Spacing.XLARGE}>
                 <Header onBack={goBack}>
-                    <Header.Title>Create item</Header.Title>
+                    <Header.Title>{HeaderTitle} item</Header.Title>
                 </Header>
             </Box>
             <ScrollBox style={{ marginBottom: 80 }} padding={Spacing.XLARGE}>
                 <Spacer style={{ marginBottom: 80 }} flex={0} itemsFlex={0}>
                     <Form.Error />
                     <TextInput name="name" label="Name" />
-                    <Multiline name="description" label="Description" />
+                    <Multiline required={false} name="description" label="Description" />
                     <Box width="100%" height={1} backgroundColor="blackLight" />
 
                     <Box>
@@ -134,7 +112,7 @@ export function CreateItem() {
             </ScrollBox>
             <Spacer space={10} style={spacerStyle} flexGrow={1} horizontal>
                 <Button variant="ghost">Cancel</Button>
-                <Form.Submit disabled={itemLoading}>Create</Form.Submit>
+                <Form.Submit disabled={isLoading}>Create</Form.Submit>
             </Spacer>
         </Form.Wrapper>
     );

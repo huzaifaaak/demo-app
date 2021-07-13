@@ -15,7 +15,7 @@ export namespace Routes {
         TRANSACTIONS: 'transactions',
         SETTINGS: 'settings',
         VIEWITEM: 'viewItem',
-        CREATEITEM: 'createItem',
+        CREATE_ITEM: 'createItem',
     };
 
     export const BottomTabBar = 'bottomTabBar';

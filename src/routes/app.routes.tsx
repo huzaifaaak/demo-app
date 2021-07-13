@@ -33,7 +33,11 @@ export function BaseRoutes() {
             <Stack.Screen name={Routes.BottomTabBar} component={BottomTabs} />
             <Stack.Screen name={Routes.App.CHECKOUT} component={Checkout} />
             <Stack.Screen name={Routes.App.VIEWITEM} component={ViewItem} />
-            <Stack.Screen name={Routes.App.CREATEITEM} component={CreateItem} />
+            <Stack.Screen
+                name={Routes.App.CREATE_ITEM}
+                component={CreateItem}
+                initialParams={{ type: 'create', defaultValue: {} }}
+            />
         </Stack.Navigator>
     );
 }

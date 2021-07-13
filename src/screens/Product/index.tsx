@@ -1,5 +1,9 @@
 import React from 'react';
 
+import { Alert } from 'react-native';
+
+import { useNavigation } from '@react-navigation/native';
+
 import IconAccountBoxFill from '@icons/AccountBoxFill';
 import IconAddFill from '@icons/AddFill';
 
@@ -12,6 +16,8 @@ import { Icon } from '@components/Icon';
 import { Spacer } from '@components/Spacer';
 import { Tabs, Tab } from '@components/Tabs';
 
+import { Routes } from '@constants/routes';
+
 import { Checkout } from '@screens/Checkout';
 import { Items } from '@screens/Items';
 
@@ -23,6 +29,13 @@ const BOTTOM_SHEET_NAME = 'product';
 
 export function Product() {
     const { expand, close } = useBottomSheet(BOTTOM_SHEET_NAME);
+
+    const { navigate } = useNavigation();
+
+    const goToCreateItem = () => {
+        console.log('ok ? ');
+        navigate(Routes.App.CREATE_ITEM);
+    };
 
     return (
         <>
@@ -38,15 +51,16 @@ export function Product() {
                     <Tab tabKey="Categories" title="Categories" scene={Checkout} />
                 </Tabs>
             </Box>
+            <Button onPress={goToCreateItem}>Create item</Button>
             <BottomSheet maxSnap={'30%'} id={BOTTOM_SHEET_NAME}>
                 <Container>
                     <Spacer space={10}>
                         <Spacer horizontal space={10}>
-                            <ActionButton>
+                            <ActionButton onPress={goToCreateItem}>
                                 <Icon icon={IconAccountBoxFill} />
                                 <Label>Create item</Label>
                             </ActionButton>
-                            <ActionButton>
+                            <ActionButton onPress={() => alert('zzz')}>
                                 <Icon icon={IconAccountBoxFill} />
                                 <Label>Create category</Label>
                             </ActionButton>
