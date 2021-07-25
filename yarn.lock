@@ -1011,12 +1011,8 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bridghq/types@2021.5.0-2.84906":
-  version "2021.5.0-2.84906"
-  resolved "https://npm.pkg.github.com/download/@bridghq/types/2021.5.0-2.84906/694711c6ad7973315257ecab989815de7d38297d5a1cc2c9dffbb35d5e91b0ba#88fe261682536083a88a6db11c8ff111ea1cf634"
-  integrity sha512-5b+VaEGgk6BcWNX1wW5GvEPJnbgSWsZlFWWHlLM/13Ej9AjPCXP/Iju0bE7AZldl9caUvVri2esYIBaTJJ8PAQ==
-  dependencies:
-    zod "2.0.0-beta.30"
+"@bridghq/types@./@bridghq":
+  version "0.0.0"
 
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
@@ -7075,7 +7071,7 @@ react-native-reanimated@2.2.0:
     mockdate "^3.0.2"
     string-hash-64 "^1.0.3"
 
-react-native-redash@16.1.1:
+react-native-redash@16.1.1, react-native-redash@^16.0.11:
   version "16.1.1"
   resolved "https://registry.yarnpkg.com/react-native-redash/-/react-native-redash-16.1.1.tgz#784cdf55672043aab9f15ae8c965dcbae8b119ba"
   integrity sha512-pD3GMNqRz/5bUnX0ni4MMOBlVwH2dJnd7u6M80VqYGI87IfcuP6Sn1z171r0nUUeYvJ7blJQs0OKKmTsJIbWew==
@@ -7088,15 +7084,6 @@ react-native-redash@^14.2.4:
   version "14.2.4"
   resolved "https://registry.npmjs.org/react-native-redash/-/react-native-redash-14.2.4.tgz"
   integrity sha512-/1R9UxXv3ffKcrbxolqa2B247Cgd3ikyEm2q1VlBng77Es6PAD4LAOXQ83pBavvwNfOsbhF3ebkbMpJcLaVt3Q==
-  dependencies:
-    abs-svg-path "^0.1.1"
-    normalize-svg-path "^1.0.1"
-    parse-svg-path "^0.1.2"
-
-react-native-redash@^16.0.11:
-  version "16.1.1"
-  resolved "https://registry.yarnpkg.com/react-native-redash/-/react-native-redash-16.1.1.tgz#784cdf55672043aab9f15ae8c965dcbae8b119ba"
-  integrity sha512-pD3GMNqRz/5bUnX0ni4MMOBlVwH2dJnd7u6M80VqYGI87IfcuP6Sn1z171r0nUUeYvJ7blJQs0OKKmTsJIbWew==
   dependencies:
     abs-svg-path "^0.1.1"
     normalize-svg-path "^1.0.1"
@@ -8960,8 +8947,3 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npmjs.org/yocto-queue/-/yocto-queue-0.1.0.tgz"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
-
-zod@2.0.0-beta.30:
-  version "2.0.0-beta.30"
-  resolved "https://registry.npmjs.org/zod/-/zod-2.0.0-beta.30.tgz"
-  integrity sha512-nwCSRXRy1jt0872mMXT2E6VVHXr2hO7jGEtwc/TDqOBb7gGodwAjsQ6UCS4XJLUmjVvmqLsuPvAIN8oL26weCQ==

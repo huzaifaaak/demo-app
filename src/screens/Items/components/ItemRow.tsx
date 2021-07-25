@@ -32,7 +32,7 @@ export function ItemRow({
 
     const {
         id,
-        category: { color: borderLeftColor },
+        // category: { color: borderLeftColor },
         name,
         price,
         isActive,
@@ -63,7 +63,8 @@ export function ItemRow({
             paddingLeft={Spacing.LARGE}
             marginTop={Spacing.LARGE}
             activeOpacity={activeOpacity}
-            style={{ borderLeftColor }}>
+            // style={{ borderLeftColor }}
+        >
             <Text style={{ flexShrink: 1 }}>{name}</Text>
             <Text textAlign={'right'} style={{ flexShrink: 0 }}>
                 {price}

@@ -37,6 +37,12 @@ export const ViewItem = React.memo(function ({ route }: { route: any }) {
         [navigate, item]
     );
 
+    const { mutate, data: items } = useSWR('/items/list', {});
+
+    const deleteItem = () => {
+        goBack();
+    };
+
     if (!item && !error) {
         return (
             <SkeletonContent

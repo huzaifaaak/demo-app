@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { ICatalog } from '@bridghq/types';
 
+import { Item } from '@bridghq/types/lib/types/prisma-client';
 import { usePatch, usePost } from '@fetch';
 
 import { Routes } from '@constants/routes';
@@ -77,7 +78,10 @@ export const useItem = (type: string, editValues: any, navigation: any) => {
             if (type === 'create') {
                 goBack();
                 navigate(Routes.App.VIEWITEM, { id: postResp?.id });
-                mutate();
+                // mutate();
+                mutate((data: Item[]) => {
+                    return [...data, postResp];
+                }, false);
             }
         }
     }, [postResp, type, goBack, navigate, itemError, mutate]);

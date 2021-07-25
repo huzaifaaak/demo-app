@@ -26,7 +26,7 @@ export const Items = React.memo(function () {
 
     const { navigate } = useNavigation();
 
-    const { data: items, error: error, revalidate } = useSWR('/items/list', {});
+    const { data: items, error: error, revalidate, mutate } = useSWR('/items/list', {});
     const { vendor } = useMetaInfo();
 
     const currencySymbol = useMemo(() => {
