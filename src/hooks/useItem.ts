@@ -3,8 +3,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 import { ICatalog } from '@bridghq/types';
-
 import { Item } from '@bridghq/types/lib/types/prisma-client';
+
 import { usePatch, usePost } from '@fetch';
 
 import { Routes } from '@constants/routes';

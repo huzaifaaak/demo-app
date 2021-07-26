@@ -11,7 +11,7 @@
         "lint": "eslint . --ext .ts,.tsx"
     },
     "dependencies": {
-        "@bridghq/types": "./@bridghq",
+        "@bridghq/types": "https://github.com/huzaifaaak/demo-types.git",
         "@gorhom/bottom-sheet": "2",
         "@gorhom/portal": "1.0.4",
         "@hookform/resolvers": "2.4.0",
